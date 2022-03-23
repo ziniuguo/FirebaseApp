@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 indexList.add("Posts");
                 for(DataSnapshot value: dataSnapshot.getChildren()){
                     Log.d("Button", "Value is: " + value.getValue());
-                    countryList.add((String) value.getValue(String.class));
+                    countryList.add((String) value.getValue());
                     indexList.add(value.getKey());
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, R.id.listText, countryList);
