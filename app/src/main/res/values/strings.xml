@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FirebaseApp</string>
+    <string name="post_activity_name">New Post</string>
+</resources>
