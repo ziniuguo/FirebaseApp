@@ -21,7 +21,7 @@
 
 
     <Button
-        android:layout_below="@+id/testText"
+        android:layout_below="@+id/adminNotice"
         android:layout_centerInParent="true"
         android:id="@+id/postData"
         android:layout_height="wrap_content"
