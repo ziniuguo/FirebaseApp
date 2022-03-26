@@ -12,8 +12,17 @@
     android:paddingBottom="10dp"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mainToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorToolbar"
+        android:theme="@style/ToolbarTheme">
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/adminNotice"
+        android:layout_below="@id/mainToolbar"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
