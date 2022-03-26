@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 
@@ -72,9 +73,24 @@ public class MainActivity extends AppCompatActivity {
                 indexList.clear();
                 for(DataSnapshot value: dataSnapshot.getChildren()){
                     if (Objects.equals(value.child("status").getValue(), "Active")) {
+
+                        // this is stupid, it eats up time complexity O(n)
+                        // and space complexity O(1).
+                        // I should use a different structure like queue.
+                        // But nvm, probably we can solve this problem
+                        // if we want to implement sorting function later.
+
+                        Collections.reverse(titleList);
                         titleList.add((String) value.child("title").getValue());
+                        Collections.reverse(titleList);
+
+                        Collections.reverse(contentList);
                         contentList.add((String) value.child("thread").getValue());
+                        Collections.reverse(contentList);
+
+                        Collections.reverse(indexList);
                         indexList.add(value.getKey());
+                        Collections.reverse(indexList);
                     }
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this,
