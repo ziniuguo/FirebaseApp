@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,10 +22,22 @@ public class PostActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
     DatabaseReference myRef = database.getReference("message");
 
+    // set toolbar
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        // set toolbar back arrow
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         editText = findViewById(R.id.threadContent);
         titleText = findViewById(R.id.threadTitle);
         buttonPush = findViewById(R.id.pushData);
@@ -42,10 +55,14 @@ public class PostActivity extends AppCompatActivity {
         });
 
     }
+
+    // control the back arrow
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            // onBackPressed();
+            // i think onBackPressed also can lah
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
