@@ -22,12 +22,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
-    TextView textView;
+    public static String THREADID = "refThreadId";
+    public static String USERID = "refUserId";
+    TextView adminNotice;
     Button buttonPost;
 
     // ListView
@@ -37,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> indexList = new ArrayList<String>();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
-    DatabaseReference myRef = database.getReference("message");
-    DatabaseReference myRef2 = database.getReference("2");
+    DatabaseReference threadsRef = database.getReference("Threads");
+    DatabaseReference adminRef = database.getReference("Admins");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         simpleList = findViewById(R.id.simpleListView);
-        textView = findViewById(R.id.testText);
+        adminNotice = findViewById(R.id.adminNotice);
         buttonPost = findViewById(R.id.postData);
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        threadsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -62,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 indexList.clear();
                 indexList.add("Posts");
                 for(DataSnapshot value: dataSnapshot.getChildren()){
-                    titleList.add((String) value.child("threadTitle").getValue());
-                    contentList.add((String) value.child("threadContent").getValue());
-                    indexList.add(value.getKey());
+                    if (Objects.equals(value.child("status").getValue(), "Active")) {
+                        titleList.add((String) value.child("title").getValue());
+                        contentList.add((String) value.child("thread").getValue());
+                        indexList.add(value.getKey());
+                    }
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this,
                         R.layout.activity_listview, R.id.listText, titleList);
@@ -77,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myRef2.addValueEventListener(new ValueEventListener() {
+        adminRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String change = snapshot.getValue(String.class);
-                textView.setText(change);
+                adminNotice.setText(change);
             }
 
             @Override
@@ -94,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
         buttonPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Eventually query for userId from firebase as well
+                navigate.putExtra(USERID, "TestUserHardCoded");
+
                 startActivity(navigate);
             }
         });
@@ -105,12 +113,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // delete post
-                // myRef.child(indexList.get(position)).removeValue();
-                postDetail.putExtra("titleKey", titleList.get(position));
-                postDetail.putExtra("contentKey", contentList.get(position));
-                postDetail.putExtra("indexKey", indexList.get(position));
-                startActivity(postDetail);
+                if (indexList.get(position) != null && !indexList.get(position).equals("Posts")) {
+                    Log.d("Click:", indexList.get(position));
+                    postDetail.putExtra(THREADID, indexList.get(position));
+
+                    //Eventually query for userId from firebase as well
+                    postDetail.putExtra(USERID, "TestUserHardCoded");
+
+                    startActivity(postDetail);
+                }
             }
         });
     }
