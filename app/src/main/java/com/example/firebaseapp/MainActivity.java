@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         buttonPost = findViewById(R.id.postData);
         mainToolbar = findViewById(R.id.mainToolbar);
         setSupportActionBar(mainToolbar);
-        
+
         threadsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
