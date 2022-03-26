@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                     contentList.add((String) value.child("threadContent").getValue());
                     indexList.add(value.getKey());
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, R.id.listText, titleList);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this,
+                        R.layout.activity_listview, R.id.listText, titleList);
                 simpleList.setAdapter(arrayAdapter);
             }
             @Override
