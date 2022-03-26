@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mainToolbar;
 
     // ListView
-    ListView simpleList;
-    ArrayList<String> titleList = new ArrayList<String>();
-    ArrayList<String> contentList = new ArrayList<String>();
-    ArrayList<String> indexList = new ArrayList<String>();
+    ListView postList;
+    ArrayList<String> titleList = new ArrayList<>();
+    ArrayList<String> contentList = new ArrayList<>();
+    ArrayList<String> indexList = new ArrayList<>();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
     DatabaseReference threadsRef = database.getReference("Threads");
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        simpleList = findViewById(R.id.simpleListView);
+        postList = findViewById(R.id.simpleListView);
         adminNotice = findViewById(R.id.adminNotice);
 //        buttonPost = findViewById(R.id.postData);
 
@@ -93,9 +92,14 @@ public class MainActivity extends AppCompatActivity {
                         Collections.reverse(indexList);
                     }
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this,
+                ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this,
                         R.layout.activity_listview, R.id.listText, titleList);
-                simpleList.setAdapter(arrayAdapter);
+
+                MyAdapter myAdapter = new MyAdapter(MainActivity.this, R.layout.activity_listview,
+                        R.id.listText, titleList, contentList);
+
+
+                postList.setAdapter(myAdapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -132,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         // tap on the post
         Intent postDetail = new Intent(MainActivity.this, ThreadActivity.class);
-        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        postList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {

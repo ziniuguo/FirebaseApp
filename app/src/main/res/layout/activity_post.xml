@@ -19,6 +19,7 @@
 
     <EditText
         android:id="@+id/threadTitle"
+        android:maxLength="60"
         android:layout_width="match_parent"
         android:layout_below="@+id/postToolbar"
         android:layout_height="50dp"

@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseApp">
+
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
             <intent-filter>
@@ -21,11 +23,13 @@
         </activity>
         <activity
             android:name=".PostActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="@string/post_activity_name"/>
         <activity
             android:name=".ThreadActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:label="@string/detail_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
