@@ -60,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 indexList.clear();
                 indexList.add("Posts");
                 for(DataSnapshot value: dataSnapshot.getChildren()){
-                    Log.d("Button", "Value is: " + value.getValue());
-                    countryList.add((String) value.getValue());
+                    countryList.add((String) value.child("threadContent").getValue());
                     indexList.add(value.getKey());
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, R.id.listText, countryList);
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Log.i("Hello!", "info: " + position + id);
                 myRef.child(indexList.get(position)).removeValue();
             }
         });

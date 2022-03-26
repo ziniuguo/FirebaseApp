@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FirebaseApp</string>
     <string name="post_activity_name">New Post</string>
+    <string name="post_hint">What do you want to post?</string>
+    <string name="post_button">Push data</string>
+    <string name="title_hint">Title</string>
 </resources>
