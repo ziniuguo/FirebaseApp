@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     TextView adminNotice;
     Button buttonPost;
 
+    // toolbar
+    Toolbar mainToolbar;
+
     // ListView
     ListView simpleList;
     ArrayList<String> titleList = new ArrayList<String>();
@@ -51,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
         simpleList = findViewById(R.id.simpleListView);
         adminNotice = findViewById(R.id.adminNotice);
         buttonPost = findViewById(R.id.postData);
-
+        mainToolbar = findViewById(R.id.mainToolbar);
+        setSupportActionBar(mainToolbar);
+        
         threadsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
