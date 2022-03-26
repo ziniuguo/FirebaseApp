@@ -90,7 +90,7 @@ public class PostActivity extends AppCompatActivity {
             case R.id.action_send:
                 if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
                     Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_LONG).show();
-                } else if (!titleText.getText().toString().equals("Posts")) {
+                } else {
                     ThreadClass threadClassObject = new ThreadClass(publicUserID, titleText.getText().toString(), contentText.getText().toString());
                     DatabaseReference pushRef = myRef.child(Objects.requireNonNull(myRef.push().getKey()));
                     pushRef.child("userId").setValue(threadClassObject.getUserId());
@@ -100,8 +100,6 @@ public class PostActivity extends AppCompatActivity {
                     pushRef.child("thread").setValue(threadClassObject.getThread());
                     Toast.makeText(PostActivity.this, "New post created!", Toast.LENGTH_LONG).show();
                     finish();
-                } else {
-                    Toast.makeText(PostActivity.this, R.string.cannot_name_title_as_posts, Toast.LENGTH_LONG).show();
                 }
                 return true;
             case android.R.id.home:

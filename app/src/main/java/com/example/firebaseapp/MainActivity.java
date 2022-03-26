@@ -68,11 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 titleList.clear();
-                titleList.add("Posts:");
                 contentList.clear();
-                contentList.add("Posts");
                 indexList.clear();
-                indexList.add("Posts");
                 for(DataSnapshot value: dataSnapshot.getChildren()){
                     if (Objects.equals(value.child("status").getValue(), "Active")) {
                         titleList.add((String) value.child("title").getValue());
@@ -123,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (indexList.get(position) != null && !indexList.get(position).equals("Posts")) {
+                if (indexList.get(position) != null) {
                     Log.d("Click:", indexList.get(position));
                     postDetail.putExtra(THREADID, indexList.get(position));
 

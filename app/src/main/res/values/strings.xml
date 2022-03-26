@@ -3,11 +3,9 @@
     <string name="post_activity_name">New Post</string>
     <string name="detail_activity_name">Detail</string>
     <string name="post_hint">What do you want to post?</string>
-    <string name="post_button">Post</string>
     <string name="title_hint">Title</string>
     <string name="loadingPlaceholder">loading…</string>
     <string name="create_new_post">Post</string>
-    <string name="cannot_name_title_as_posts">Cannot name title of thread as \"Posts\"!</string>
     <string name="delete">Delete</string>
     <string name="empty_title_or_content">Title or content of thread cannot be empty!</string>
     <string name="send_post">send</string>
