@@ -4,4 +4,6 @@
     <string name="post_hint">What do you want to post?</string>
     <string name="post_button">Post</string>
     <string name="title_hint">Title</string>
+    <string name="adminNotice">loading...</string>
+    <string name="create_new_post">Post</string>
 </resources>

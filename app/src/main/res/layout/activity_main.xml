@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/testText"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="placeholder"/>
+        android:text="@string/adminNotice"/>
 
 
     <Button
+        android:layout_below="@+id/testText"
+        android:layout_centerInParent="true"
         android:id="@+id/postData"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Create New Post" />
+        android:text="@string/create_new_post" />
 
 
     <ListView
         android:id="@+id/simpleListView"
+        android:layout_below="@id/postData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-</LinearLayout>
+</RelativeLayout>

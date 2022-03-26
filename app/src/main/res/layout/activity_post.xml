@@ -23,7 +23,6 @@
             <Button
                 android:text="@string/post_button"
                 android:id="@+id/pushData"
-                android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

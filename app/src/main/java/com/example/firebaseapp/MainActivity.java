@@ -60,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
                 indexList.clear();
                 indexList.add("Posts");
                 for(DataSnapshot value: dataSnapshot.getChildren()){
-                    countryList.add((String) value.child("threadContent").getValue());
+                    countryList.add((String) value.child("threadTitle").getValue());
                     indexList.add(value.getKey());
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.activity_listview, R.id.listText, countryList);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, R.id.listText, countryList);
                 simpleList.setAdapter(arrayAdapter);
             }
             @Override
