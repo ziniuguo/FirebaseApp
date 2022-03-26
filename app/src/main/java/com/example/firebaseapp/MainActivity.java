@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         simpleList = findViewById(R.id.simpleListView);
         adminNotice = findViewById(R.id.adminNotice);
         buttonPost = findViewById(R.id.postData);
+
+        // set maintoolbar so that the app name is shown
         mainToolbar = findViewById(R.id.mainToolbar);
         setSupportActionBar(mainToolbar);
 

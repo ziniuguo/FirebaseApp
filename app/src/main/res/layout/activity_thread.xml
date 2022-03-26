@@ -29,12 +29,6 @@
         android:layout_height="wrap_content"
         android:text="@string/adminNotice"/>
 
-    <Button
-        android:layout_below="@id/threadContentText"
-        android:id="@+id/deleteButton"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/delete"/>
+
 
 </RelativeLayout>

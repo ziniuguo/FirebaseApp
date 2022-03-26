@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Forum</string>
     <string name="post_activity_name">New Post</string>
+    <string name="detail_activity_name">Detail</string>
     <string name="post_hint">What do you want to post?</string>
     <string name="post_button">Post</string>
     <string name="title_hint">Title</string>

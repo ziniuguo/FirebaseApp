@@ -3,10 +3,12 @@ package com.example.firebaseapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,15 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.StringBufferInputStream;
 import java.util.Objects;
 
 public class ThreadActivity extends AppCompatActivity {
 
+    // A stupid way. Got better solution?
+    String publicThreadID;
+
     Boolean usersThread = false;
     TextView threadTitleText;
     TextView threadContentText;
-    Button deleteButton;
+    // Button deleteButton;
     Toolbar detailToolbar;
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
     DatabaseReference threadsRef = database.getReference("Threads");
@@ -38,11 +42,15 @@ public class ThreadActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String threadId = intent.getStringExtra(MainActivity.THREADID);
+
+        // A stupid way. Got better solution?
+        publicThreadID = threadId;
+
         String userId = intent.getStringExtra(MainActivity.USERID);
 
+//        deleteButton = findViewById(R.id.deleteButton);
         threadTitleText = findViewById(R.id.threadTitleText);
         threadContentText = findViewById(R.id.threadContentText);
-        deleteButton = findViewById(R.id.deleteButton);
 
         // show back(up) button
         detailToolbar = findViewById(R.id.detailToolbar);
@@ -75,27 +83,46 @@ public class ThreadActivity extends AppCompatActivity {
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (usersThread) {
-                    threadsRef.child(threadId).getRef().removeValue();
-                    finish();
-                }
-            }
-        });
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (usersThread) {
+//                    threadsRef.child(threadId).getRef().removeValue();
+//                    finish();
+//                }
+//            }
+//        });
 
     }
 
-    // control the back arrow
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_menu, menu);
+        return true;
+    }
+
+    // control the back arrow, and delete etc.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            // onBackPressed();
-            // i think onBackPressed also can lah
-            finish();
-            return true;
+        // Handle item selection
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_add:
+                Toast.makeText(ThreadActivity.this, "Add", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.deleteButton:
+                Toast.makeText(ThreadActivity.this, "Deleted Success", Toast.LENGTH_LONG).show();
+                if (usersThread) {
+                    threadsRef.child(publicThreadID).getRef().removeValue();
+                    finish();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 }
