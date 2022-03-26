@@ -1,6 +1,5 @@
 package com.example.firebaseapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +12,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Objects;
-
 public class PostActivity extends AppCompatActivity {
     EditText editText;
     EditText titleText;
@@ -23,7 +20,7 @@ public class PostActivity extends AppCompatActivity {
     DatabaseReference myRef = database.getReference("message");
 
     // set toolbar
-    Toolbar toolbar;
+    Toolbar postToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +28,8 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         // set toolbar back arrow
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        postToolbar = findViewById(R.id.postToolbar);
+        setSupportActionBar(postToolbar);
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -46,8 +43,8 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DatabaseReference pushRef = myRef.push();
                 String genKey = pushRef.getKey();
-                myRef.child(genKey).child("threadContent").setValue("Content: " + editText.getText().toString());
-                myRef.child(genKey).child("threadTitle").setValue("Title: " + titleText.getText().toString());
+                myRef.child(genKey).child("threadContent").setValue(editText.getText().toString());
+                myRef.child(genKey).child("threadTitle").setValue(titleText.getText().toString());
 //                Intent intent = new Intent(PostActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Don't start new activity
 //                startActivity(intent);
                 finish();

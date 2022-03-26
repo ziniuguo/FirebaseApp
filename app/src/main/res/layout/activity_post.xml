@@ -10,7 +10,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/postToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorToolbar"
@@ -33,7 +33,7 @@
     <EditText
         android:id="@+id/threadTitle"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/postToolbar"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:gravity="start"

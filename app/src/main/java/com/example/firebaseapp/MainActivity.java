@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     // ListView
     ListView simpleList;
-    ArrayList<String> countryList = new ArrayList<String>();
+    ArrayList<String> titleList = new ArrayList<String>();
+    ArrayList<String> contentList = new ArrayList<String>();
     ArrayList<String> indexList = new ArrayList<String>();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
@@ -55,15 +55,18 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                countryList.clear();
-                countryList.add("Posts:");
+                titleList.clear();
+                titleList.add("Posts:");
+                contentList.clear();
+                contentList.add("Posts");
                 indexList.clear();
                 indexList.add("Posts");
                 for(DataSnapshot value: dataSnapshot.getChildren()){
-                    countryList.add((String) value.child("threadTitle").getValue());
+                    titleList.add((String) value.child("threadTitle").getValue());
+                    contentList.add((String) value.child("threadContent").getValue());
                     indexList.add(value.getKey());
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, R.id.listText, countryList);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.activity_listview, R.id.listText, titleList);
                 simpleList.setAdapter(arrayAdapter);
             }
             @Override
@@ -94,11 +97,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // tap on the post
+        Intent postDetail = new Intent(MainActivity.this, ThreadActivity.class);
         simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                myRef.child(indexList.get(position)).removeValue();
+                // delete post
+                // myRef.child(indexList.get(position)).removeValue();
+                postDetail.putExtra("titleKey", titleList.get(position));
+                postDetail.putExtra("contentKey", contentList.get(position));
+                postDetail.putExtra("indexKey", indexList.get(position));
+                startActivity(postDetail);
             }
         });
     }

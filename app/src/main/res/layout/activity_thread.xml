@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detailToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorToolbar"
+        android:theme="@style/ToolbarTheme">
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_below="@+id/detailToolbar"
+        android:id="@+id/threadTitleText"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/adminNotice"/>
+
+    <TextView
+        android:layout_below="@+id/threadTitleText"
+        android:id="@+id/threadContentText"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/adminNotice"/>
+
+</RelativeLayout>
