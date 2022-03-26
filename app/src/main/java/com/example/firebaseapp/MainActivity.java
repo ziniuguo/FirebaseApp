@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static String THREADID = "refThreadId";
     public static String USERID = "refUserId";
     TextView adminNotice;
-    Button buttonPost;
+//    Button buttonPost;
 
     // toolbar
     Toolbar mainToolbar;
@@ -54,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         simpleList = findViewById(R.id.simpleListView);
         adminNotice = findViewById(R.id.adminNotice);
-        buttonPost = findViewById(R.id.postData);
+//        buttonPost = findViewById(R.id.postData);
 
-        // set maintoolbar so that the app name is shown
+        // set mainToolbar so that the app name is shown
         mainToolbar = findViewById(R.id.mainToolbar);
         setSupportActionBar(mainToolbar);
 
@@ -102,17 +104,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Intent navigate = new Intent(MainActivity.this, PostActivity.class);
-        buttonPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //Eventually query for userId from firebase as well
-                navigate.putExtra(USERID, "TestUserHardCoded");
-
-                startActivity(navigate);
-            }
-        });
+//        Intent navigate = new Intent(MainActivity.this, PostActivity.class);
+//        buttonPost.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                //Eventually query for userId from firebase as well
+//                navigate.putExtra(USERID, "TestUserHardCoded");
+//
+//                startActivity(navigate);
+//            }
+//        });
 
 
         // tap on the post
@@ -134,5 +136,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Intent navigate = new Intent(MainActivity.this, PostActivity.class);
+
+                //Eventually query for userId from firebase as well
+                navigate.putExtra(USERID, "TestUserHardCoded");
+
+                startActivity(navigate);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

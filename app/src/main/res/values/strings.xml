@@ -10,4 +10,5 @@
     <string name="cannot_name_title_as_posts">Cannot name title of thread as \"Posts\"!</string>
     <string name="delete">Delete</string>
     <string name="empty_title_or_content">Title or content of thread cannot be empty!</string>
+    <string name="send_post">send</string>
 </resources>

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,13 +109,10 @@ public class ThreadActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.action_add:
-                Toast.makeText(ThreadActivity.this, "Add", Toast.LENGTH_LONG).show();
-                return true;
             case R.id.deleteButton:
-                Toast.makeText(ThreadActivity.this, "Deleted Success", Toast.LENGTH_LONG).show();
                 if (usersThread) {
                     threadsRef.child(publicThreadID).getRef().removeValue();
+                    Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_LONG).show();
                     finish();
                 }
                 return true;
