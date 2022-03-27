@@ -34,11 +34,10 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     public static String THREADID = "refThreadId";
-    public static String USERID = "refUserId";
 
     // login status and shared preferences
     public static String loginStatus = "N";
-    private final String sharedPrefFile = "com.example.firebaseappshareprefs";
+    public static String USERID = "refUserId";
     SharedPreferences mPreferences;
 
     TextView adminNotice;
@@ -63,8 +62,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // login and shared preferences
+        String sharedPrefFile = "com.example.firebaseappshareprefs";
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         loginStatus = mPreferences.getString("LoginStatusKey", "N");
+        loginStatus = mPreferences.getString("UserIDKey", "N");
 
 
         postList = findViewById(R.id.simpleListView);
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 titleList.clear();
                 contentList.clear();
                 indexList.clear();
-                for(DataSnapshot value: dataSnapshot.getChildren()){
+                for (DataSnapshot value : dataSnapshot.getChildren()) {
                     if (Objects.equals(value.child("status").getValue(), "Active")) {
 
                         // this is stupid, it eats up time complexity O(n)
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                 postList.setAdapter(myAdapter);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Failed to read value
@@ -181,8 +183,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_add:
                 if (loginStatus.equals("N")) {
                     Toast.makeText(MainActivity.this, "Please login!", Toast.LENGTH_LONG).show();
-                }
-                else {
+                } else {
                     Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
 
                     //Eventually query for userId from firebase as well
@@ -226,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         SharedPreferences.Editor preferenceEditor = mPreferences.edit();
         preferenceEditor.putString("LoginStatusKey", loginStatus);
+        preferenceEditor.putString("UserIDKey", USERID);
         preferenceEditor.apply();
     }
 

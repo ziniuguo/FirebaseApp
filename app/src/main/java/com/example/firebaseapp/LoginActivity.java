@@ -11,15 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Collections;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
@@ -40,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         loginToolbar = findViewById(R.id.loginToolbar);
 
         // set text input
-        IDeditText = findViewById(R.id.emailInput);
+        IDeditText = findViewById(R.id.IDInput);
         pwd = findViewById(R.id.pwdInput);
 
         setSupportActionBar(loginToolbar);
@@ -76,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                                 exist = true;
                                 if (Objects.equals(value.child("userPwd").getValue(), pwd.getText().toString())) {
                                     MainActivity.loginStatus = "Y";
+                                    MainActivity.USERID = IDeditText.getText().toString();
                                     Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_LONG).show();
                                     finish();
                                 } else {
@@ -89,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                             pushRef.child("userPwd").setValue(pwd.getText().toString());
                             Toast.makeText(LoginActivity.this, "Signup and login success", Toast.LENGTH_LONG).show();
                             MainActivity.loginStatus = "Y";
+                            MainActivity.USERID = IDeditText.getText().toString();
                             finish();
                         }
                     }

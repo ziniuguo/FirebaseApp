@@ -14,20 +14,21 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/emailInput"
-        android:maxLength="60"
+        android:id="@+id/IDInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:maxLines="1"
-        android:hint="@string/login_username" />
+        android:hint="@string/login_username"
+        android:minHeight="48dp"
+        android:singleLine="true"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/pwdInput"
         android:layout_width="match_parent"
-        android:maxLines="1"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:hint="@string/login_password" />
+        android:hint="@string/login_password"
+        android:minHeight="48dp"
+        android:singleLine="true"
+        android:inputType="textPassword"/>
 
 </LinearLayout>
