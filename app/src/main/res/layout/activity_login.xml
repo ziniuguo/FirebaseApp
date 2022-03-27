@@ -14,7 +14,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/threadTitle"
+        android:id="@+id/emailInput"
         android:maxLength="60"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         android:hint="@string/login_username" />
 
     <EditText
-        android:id="@+id/threadContent"
+        android:id="@+id/pwdInput"
         android:layout_width="match_parent"
         android:maxLines="1"
         android:layout_height="wrap_content"

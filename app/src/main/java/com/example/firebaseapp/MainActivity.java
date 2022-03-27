@@ -1,8 +1,11 @@
 package com.example.firebaseapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
     public static String THREADID = "refThreadId";
     public static String USERID = "refUserId";
 
-    public static boolean loginStatus = false;
+    // login status and shared preferences
+    public static String loginStatus = "N";
+    private final String sharedPrefFile = "com.example.firebaseappshareprefs";
+    SharedPreferences mPreferences;
 
     TextView adminNotice;
 //    Button buttonPost;
@@ -56,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // login and shared preferences
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        loginStatus = mPreferences.getString("LoginStatusKey", "N");
 
 
         postList = findViewById(R.id.simpleListView);
@@ -170,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_add:
-                if (!loginStatus) {
+                if (loginStatus.equals("N")) {
                     Toast.makeText(MainActivity.this, "Please login!", Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -181,15 +190,43 @@ public class MainActivity extends AppCompatActivity {
 
                     startActivity(postIntent);
                 }
-
                 return true;
             case R.id.action_loginPage:
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(loginIntent);
+                if (loginStatus.equals("N")) {
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                } else {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Logout")
+                            .setMessage("You are logged in already. Are you sure you want to logout?")
+
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    loginStatus = "N";
+                                    Toast.makeText(MainActivity.this, "You are logged out", Toast.LENGTH_LONG).show();
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(R.drawable.ic_logout)
+                            .show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // shared pref edit
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor preferenceEditor = mPreferences.edit();
+        preferenceEditor.putString("LoginStatusKey", loginStatus);
+        preferenceEditor.apply();
     }
 
 }
