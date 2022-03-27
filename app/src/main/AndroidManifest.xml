@@ -33,6 +33,7 @@
             android:parentActivityName=".MainActivity"
             android:label="@string/detail_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
     </application>
 
 </manifest>
