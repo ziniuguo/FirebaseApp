@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static String THREADID = "refThreadId";
     public static String USERID = "refUserId";
+
+    public static boolean loginStatus = false;
+
     TextView adminNotice;
 //    Button buttonPost;
 
@@ -92,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
                         Collections.reverse(indexList);
                     }
                 }
-                ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this,
-                        R.layout.activity_listview, R.id.listText, titleList);
+//                ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this,
+//                        R.layout.activity_listview, R.id.listText, titleList);
 
                 MyAdapter myAdapter = new MyAdapter(MainActivity.this, R.layout.activity_listview,
                         R.id.listText, titleList, contentList);
@@ -153,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    // don't forget to inflate!
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -164,12 +170,22 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_add:
-                Intent navigate = new Intent(MainActivity.this, PostActivity.class);
+                if (!loginStatus) {
+                    Toast.makeText(MainActivity.this, "Please login!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
 
-                //Eventually query for userId from firebase as well
-                navigate.putExtra(USERID, "TestUserHardCoded");
+                    //Eventually query for userId from firebase as well
+                    postIntent.putExtra(USERID, "TestUserHardCoded");
 
-                startActivity(navigate);
+                    startActivity(postIntent);
+                }
+
+                return true;
+            case R.id.action_loginPage:
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -76,6 +76,7 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    // don't forget to inflate!
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.post_menu, menu);

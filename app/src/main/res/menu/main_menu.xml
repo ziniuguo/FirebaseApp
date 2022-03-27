@@ -8,4 +8,10 @@
         android:title="@string/create_new_post">
     </item>
 
+    <item
+        android:id="@+id/action_loginPage"
+        android:icon="@drawable/ic_profile"
+        app:showAsAction="always"
+        android:title="@string/create_new_post">
+    </item>
 </menu>
