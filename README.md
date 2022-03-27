@@ -1,14 +1,14 @@
 # FirebaseApp
- 
+
 hi guys
 
-pleaso do familiarize yourself with **git** versioning tool, or just github desktop if youre lazy
+pleaso do familiarize yourself with **git versioning tool**, or just github desktop if youre lazy
 
-**we dont do "add files via uploads" such things**
+**we shouldnt do "add files via uploads" or "Update xxx.xx"**
 
 please create your own branches and test your own part there and, when youre sure its working, commit and push to **release** branch (sorry but main branch is occupied by ziniu and shaun)
 
-if you wan to commit to release branch from your own computer, please do **fetch** from release and commmit, dont override others code
+**fetch and pull** from release and commit, **dont override others code** 
 
 thanks
-hope we finish asap
+hope we finish 1d asap
