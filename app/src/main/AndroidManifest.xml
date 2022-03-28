@@ -41,6 +41,11 @@
             android:label="@string/login_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/login_activity_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

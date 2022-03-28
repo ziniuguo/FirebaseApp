@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.firebaseapp.R;
+import com.example.firebaseapp.profile.ProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     // toolbar
     Toolbar mainToolbar;
 
+    // bottom bar
+    BottomNavigationView bottomNavigationView;
+
     // ListView
     ListView postList;
     ArrayList<String> titleList = new ArrayList<>();
@@ -60,6 +65,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // bottom bar
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.thread);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId())
+                {
+                    case R.id.dashboard:
+                        Toast.makeText(MainActivity.this,"Not implemented yet. You can go and do your part there!", Toast.LENGTH_LONG).show();
+                        return true;
+                    case R.id.thread:
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         // login and shared preferences
         String sharedPrefFile = "com.example.firebaseappshareprefs";
@@ -233,4 +263,10 @@ public class MainActivity extends AppCompatActivity {
         preferenceEditor.apply();
     }
 
+    // fix bottom bar wrong item selected problem!!
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomNavigationView.setSelectedItemId(R.id.thread);
+    }
 }
