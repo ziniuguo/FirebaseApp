@@ -4,11 +4,11 @@ hi guys
 
 pleaso do familiarize yourself with **git versioning control** tool, or just github desktop if youre lazy
 
-### *we shouldnt do "add files via upload" or "Update xxx.xx"*
+### *we shouldn't do "add files via upload" or "Update xxx.xx"*
 
-please create your own branches and test your own part there and, when youre sure its working, commit and push to **release** branch (sorry but main branch is occupied by ziniu and shaun)
+please create your own branches, or fork, and test your own part there and, when you're sure its working, commit and push to **release** branch (sorry main branch is occupied by zi niu and shaun)
 
-**fetch and pull** from release and commit, **dont override others code** 
+**fetch and pull** from release and commit, **don't override others code** 
 
 thanks
 
