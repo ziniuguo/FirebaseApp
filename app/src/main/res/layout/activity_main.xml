@@ -38,11 +38,6 @@
         android:paddingEnd="10dp"
         android:paddingBottom="10dp" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/adminNotice"/>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
