@@ -34,7 +34,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String THREADID = "refThreadId";
 
     // login status and shared preferences
     public static String loginStatus = "N";
