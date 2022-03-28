@@ -264,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // fix bottom bar wrong item selected problem!!
+    // this is fucking tricky im a fucking genius
     @Override
     protected void onResume() {
         super.onResume();
