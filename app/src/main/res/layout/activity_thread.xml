@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorToolbar"
-        android:theme="@style/ToolbarTheme"></androidx.appcompat.widget.Toolbar>
+        android:theme="@style/ToolbarTheme" />
 
     <TextView
         android:id="@+id/threadTitleText"

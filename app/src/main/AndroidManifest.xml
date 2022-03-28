@@ -11,7 +11,7 @@
         android:theme="@style/Theme.FirebaseApp">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".thread.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
@@ -22,22 +22,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PostActivity"
+            android:name=".thread.PostActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".thread.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="@string/post_activity_name"/>
         <activity
-            android:name=".ThreadActivity"
+            android:name=".thread.ThreadActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".thread.MainActivity"
             android:label="@string/detail_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".thread.LoginActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".thread.MainActivity"
             android:label="@string/login_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 

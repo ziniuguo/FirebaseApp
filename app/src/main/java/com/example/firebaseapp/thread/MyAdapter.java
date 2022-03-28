@@ -1,4 +1,4 @@
-package com.example.firebaseapp;
+package com.example.firebaseapp.thread;
 
 
 // DO NOT MODIFY this file in ANY CONDITION!!
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.firebaseapp.R;
 
 import java.util.ArrayList;
 
