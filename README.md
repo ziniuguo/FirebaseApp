@@ -2,7 +2,7 @@
 
 hi guys
 
-pleaso do familiarize yourself with **git versioning control** tool, or just github desktop if youre lazy
+please do familiarize yourself with **git versioning control** tool, or just github desktop if youre lazy
 
 ### *we shouldn't do "add files via upload" or "Update xxx.xx"*
 
