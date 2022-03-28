@@ -82,9 +82,11 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                         if (!exist) {
-                            if (IDeditText.getText().toString().equals("") || pwd.getText().toString().equals("")){
+                            if (IDeditText.getText().toString().equals("") || pwd.getText().toString().equals("")) {
                                 Toast.makeText(LoginActivity.this, "Username and password cannot be empty!", Toast.LENGTH_LONG).show();
-                            }else{
+                            } else if (IDeditText.getText().toString().length() != 7) {
+                                Toast.makeText(LoginActivity.this, "Please use your studentID as username", Toast.LENGTH_LONG).show();
+                            } else {
                                 DatabaseReference pushRef = usersRef.child(Objects.requireNonNull(usersRef.push().getKey()));
                                 pushRef.child("userID").setValue(IDeditText.getText().toString());
                                 pushRef.child("userPwd").setValue(pwd.getText().toString());
@@ -92,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                 MainActivity.loginStatus = "Y";
                                 MainActivity.USERID = IDeditText.getText().toString();
                                 finish();
+
                             }
                         }
                     }
@@ -105,12 +108,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 return true;
             case android.R.id.home:
+
                 // onBackPressed();
                 // i think onBackPressed also can lah
                 finish();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.
+
+                        onOptionsItemSelected(item);
         }
     }
 }

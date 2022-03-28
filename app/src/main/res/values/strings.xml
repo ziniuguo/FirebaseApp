@@ -9,8 +9,9 @@
     <string name="delete">Delete</string>
     <string name="empty_title_or_content">Title or content of thread cannot be empty!</string>
     <string name="send_post">send</string>
-    <string name="login_username">Username</string>
+    <string name="login_username">StudentID</string>
     <string name="login_password">Password</string>
     <string name="login_activity_name">Login</string>
     <string name="login">login</string>
+    <string name="login_notice">Please use your studentID as username. \nIf you don\'t have an account, you will be signed up automatically.</string>
 </resources>
