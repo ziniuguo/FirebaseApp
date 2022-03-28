@@ -1,9 +1,6 @@
 package com.example.firebaseapp.thread;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     // login status and shared preferences
     public static String loginStatus = "N";
     public static String USERID = "refUserId";
-    SharedPreferences mPreferences;
+    public static SharedPreferences mPreferences;
 
     TextView adminNotice;
 //    Button buttonPost;
@@ -78,13 +75,17 @@ public class MainActivity extends AppCompatActivity {
                 switch(item.getItemId())
                 {
                     case R.id.dashboard:
-                        Toast.makeText(MainActivity.this,"Not implemented yet. You can go and do your part there!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Not implemented yet. You can go and do your part there!", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.thread:
                         return true;
                     case R.id.profile:
-                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                        overridePendingTransition(0,0);
+                        if (loginStatus.equals("N")) {
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        } else {
+                            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                            overridePendingTransition(0,0);
+                        }
                         return true;
                 }
                 return false;
@@ -212,41 +213,17 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_add:
                 if (loginStatus.equals("N")) {
-                    Toast.makeText(MainActivity.this, "Please login!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Please login to join our community!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 } else {
                     Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
 
                     //Eventually query for userId from firebase as well
                     postIntent.putExtra("USERID", USERID);
-
                     startActivity(postIntent);
                 }
                 return true;
-            case R.id.action_loginPage:
-                if (loginStatus.equals("N")) {
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(loginIntent);
-                } else {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Logout " + USERID)
-                            .setMessage("You are logged in already. Are you sure you want to logout?")
 
-                            // Specifying a listener allows you to take an action before dismissing the dialog.
-                            // The dialog is automatically dismissed when a dialog button is clicked.
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    loginStatus = "N";
-                                    USERID="refUserID";
-                                    Toast.makeText(MainActivity.this, "You are logged out", Toast.LENGTH_LONG).show();
-                                }
-                            })
-
-                            // A null listener allows the button to dismiss the dialog and take no further action.
-                            .setNegativeButton(android.R.string.no, null)
-                            .setIcon(R.drawable.ic_logout)
-                            .show();
-                }
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -259,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor preferenceEditor = mPreferences.edit();
         preferenceEditor.putString("LoginStatusKey", loginStatus);
         preferenceEditor.putString("UserIDKey", USERID);
-//        Toast.makeText(MainActivity.this, loginStatus, Toast.LENGTH_LONG).show();
+//        Toast.makeText(MainActivity.this, loginStatus, Toast.LENGTH_SHORT).show();
         preferenceEditor.apply();
     }
 

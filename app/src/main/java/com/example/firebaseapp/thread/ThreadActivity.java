@@ -2,6 +2,7 @@ package com.example.firebaseapp.thread;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -119,10 +120,10 @@ public class ThreadActivity extends AppCompatActivity {
             case R.id.deleteButton:
                 if (usersThread) {
                     threadsRef.child(publicThreadID).getRef().removeValue();
-                    Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(ThreadActivity.this, "No Permission", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ThreadActivity.this, "No Permission", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default:

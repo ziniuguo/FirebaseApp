@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/profile"
-        android:title="About"
-        android:icon="@drawable/ic_about"/>
+        android:title="Me"
+        android:icon="@drawable/ic_profile"/>
 
 </menu>

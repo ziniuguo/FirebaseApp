@@ -38,17 +38,24 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/threadContentText"
+    <ScrollView
+        android:layout_below="@+id/threadUserIDText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/threadUserIDText"
-        android:layout_centerHorizontal="true"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="@string/loadingPlaceholder"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="14sp" />
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/threadContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loadingPlaceholder"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="14sp" />
+
+    </ScrollView>
+
 
 
 

@@ -58,7 +58,7 @@ public class PostActivity extends AppCompatActivity {
 //            @Override
 //            public void onClick(View view) {
 //                if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
-//                    Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_SHORT).show();
 //                } else if (!titleText.getText().toString().equals("Posts")) {
 //                    ThreadClass threadClassObject = new ThreadClass(userId, titleText.getText().toString(), contentText.getText().toString());
 //                    DatabaseReference pushRef = myRef.child(Objects.requireNonNull(myRef.push().getKey()));
@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
 //                    pushRef.child("thread").setValue(threadClassObject.getThread());
 //                    finish();
 //                } else {
-//                    Toast.makeText(PostActivity.this, R.string.cannot_name_title_as_posts, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(PostActivity.this, R.string.cannot_name_title_as_posts, Toast.LENGTH_SHORT).show();
 //                }
 //            }
 //        });
@@ -90,7 +90,7 @@ public class PostActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_send:
                 if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
-                    Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_LONG).show();
+                    Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_SHORT).show();
                 } else {
                     Timestamp TS = new Timestamp(System.currentTimeMillis());
                     ThreadClass threadClassObject = new ThreadClass(publicUserID, titleText.getText().toString(), contentText.getText().toString(), TS.toString());
@@ -101,7 +101,7 @@ public class PostActivity extends AppCompatActivity {
                     pushRef.child("title").setValue(threadClassObject.getTitle());
                     pushRef.child("thread").setValue(threadClassObject.getThread());
                     pushRef.child("time").setValue(threadClassObject.getTime());
-                    Toast.makeText(PostActivity.this, "New post created!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PostActivity.this, "New post created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 return true;

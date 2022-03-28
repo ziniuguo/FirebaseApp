@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_add"
-        android:icon="@drawable/ic_add"
+        android:id="@+id/profile_logout"
+        android:icon="@drawable/ic_logout_white"
         app:showAsAction="always"
-        android:title="@string/create_new_post">
+        android:title="@string/logout">
     </item>
 
 </menu>

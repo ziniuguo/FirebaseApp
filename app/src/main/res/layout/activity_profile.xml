@@ -7,10 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".profile.ProfileActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profileToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorToolbar"
+        android:theme="@style/ToolbarTheme">
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_below="@id/profileToolbar"
+        android:paddingTop="20dp"
+        android:id="@+id/usernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/do_your_profile_page_here"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About"
+        android:layout_below="@+id/usernameTextView"
+        android:text="@string/do_your_profile_page_here"
         android:textSize="50sp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
