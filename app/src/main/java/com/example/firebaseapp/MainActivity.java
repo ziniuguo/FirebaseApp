@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         String sharedPrefFile = "com.example.firebaseappshareprefs";
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         loginStatus = mPreferences.getString("LoginStatusKey", "N");
-        loginStatus = mPreferences.getString("UserIDKey", "N");
+        USERID = mPreferences.getString("UserIDKey", "refUserId");
 
 
         postList = findViewById(R.id.simpleListView);
@@ -157,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
                                     int position, long id) {
                 if (indexList.get(position) != null) {
                     Log.d("Click:", indexList.get(position));
-                    postDetail.putExtra(THREADID, indexList.get(position));
+                    postDetail.putExtra("THREADID", indexList.get(position));
 
                     //Eventually query for userId from firebase as well
-                    postDetail.putExtra(USERID, "TestUserHardCoded");
+                    postDetail.putExtra("USERID", USERID);
 
                     startActivity(postDetail);
                 }
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
 
                     //Eventually query for userId from firebase as well
-                    postIntent.putExtra(USERID, "TestUserHardCoded");
+                    postIntent.putExtra("USERID", USERID);
 
                     startActivity(postIntent);
                 }
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(loginIntent);
                 } else {
                     new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Logout")
+                            .setTitle("Logout " + USERID)
                             .setMessage("You are logged in already. Are you sure you want to logout?")
 
                             // Specifying a listener allows you to take an action before dismissing the dialog.
@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     loginStatus = "N";
+                                    USERID="refUserID";
                                     Toast.makeText(MainActivity.this, "You are logged out", Toast.LENGTH_LONG).show();
                                 }
                             })
@@ -228,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor preferenceEditor = mPreferences.edit();
         preferenceEditor.putString("LoginStatusKey", loginStatus);
         preferenceEditor.putString("UserIDKey", USERID);
+//        Toast.makeText(MainActivity.this, loginStatus, Toast.LENGTH_LONG).show();
         preferenceEditor.apply();
     }
 

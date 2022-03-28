@@ -39,12 +39,12 @@ public class ThreadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thread);
 
         Intent intent = getIntent();
-        String threadId = intent.getStringExtra(MainActivity.THREADID);
+        String threadId = intent.getStringExtra("THREADID");
 
         // A stupid way. Got better solution?
         publicThreadID = threadId;
 
-        String userId = intent.getStringExtra(MainActivity.USERID);
+        String userId = intent.getStringExtra("USERID");
 
 //        deleteButton = findViewById(R.id.deleteButton);
         threadTitleText = findViewById(R.id.threadTitleText);
@@ -114,6 +114,8 @@ public class ThreadActivity extends AppCompatActivity {
                     threadsRef.child(publicThreadID).getRef().removeValue();
                     Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_LONG).show();
                     finish();
+                } else {
+                    Toast.makeText(ThreadActivity.this, "No Permission", Toast.LENGTH_LONG).show();
                 }
                 return true;
             default:

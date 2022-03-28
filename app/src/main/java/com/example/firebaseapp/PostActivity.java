@@ -39,7 +39,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         Intent intent = getIntent();
-        String userId = intent.getStringExtra(MainActivity.USERID);
+        String userId = intent.getStringExtra("USERID");
         // A stupid way. Got better solution?
         publicUserID = userId;
 

@@ -82,13 +82,17 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                         if (!exist) {
-                            DatabaseReference pushRef = usersRef.child(Objects.requireNonNull(usersRef.push().getKey()));
-                            pushRef.child("userID").setValue(IDeditText.getText().toString());
-                            pushRef.child("userPwd").setValue(pwd.getText().toString());
-                            Toast.makeText(LoginActivity.this, "Signup and login success", Toast.LENGTH_LONG).show();
-                            MainActivity.loginStatus = "Y";
-                            MainActivity.USERID = IDeditText.getText().toString();
-                            finish();
+                            if (IDeditText.getText().toString().equals("") || pwd.getText().toString().equals("")){
+                                Toast.makeText(LoginActivity.this, "Username and password cannot be empty!", Toast.LENGTH_LONG).show();
+                            }else{
+                                DatabaseReference pushRef = usersRef.child(Objects.requireNonNull(usersRef.push().getKey()));
+                                pushRef.child("userID").setValue(IDeditText.getText().toString());
+                                pushRef.child("userPwd").setValue(pwd.getText().toString());
+                                Toast.makeText(LoginActivity.this, "Signup and login success", Toast.LENGTH_LONG).show();
+                                MainActivity.loginStatus = "Y";
+                                MainActivity.USERID = IDeditText.getText().toString();
+                                finish();
+                            }
                         }
                     }
 
