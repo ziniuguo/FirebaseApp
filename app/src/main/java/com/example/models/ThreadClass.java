@@ -1,17 +1,21 @@
 package com.example.models;
 
+import java.sql.Timestamp;
+
 public class ThreadClass implements Rating {
     private final String userId;
     private String status;
     private int rating;
     private String title;
     private String thread;
+    private String time;
 
-    public ThreadClass(String userId, String title, String thread) {
+    public ThreadClass(String userId, String title, String thread, String time) {
         this.userId = userId;
         this.status = "Active";
         this.title = title;
         this.thread = thread;
+        this.time = time;
     }
 
     @Override
@@ -49,6 +53,8 @@ public class ThreadClass implements Rating {
     public String getThread() {
         return this.thread;
     }
+
+    public String getTime() {return this.time;}
 
     public void setThread(String thread) {
         this.thread = thread;

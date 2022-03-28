@@ -8,35 +8,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorToolbar"
-        android:theme="@style/ToolbarTheme">
-    </androidx.appcompat.widget.Toolbar>
+        android:theme="@style/ToolbarTheme"></androidx.appcompat.widget.Toolbar>
 
     <TextView
+        android:id="@+id/threadTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detailToolbar"
+        android:layout_centerHorizontal="true"
         android:fontFamily="serif"
         android:padding="10dp"
+        android:text="@string/loadingPlaceholder"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_below="@+id/detailToolbar"
-        android:id="@+id/threadTitleText"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/loadingPlaceholder"/>
+        android:textStyle="bold" />
 
     <TextView
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_below="@+id/threadTitleText"
-        android:id="@+id/threadContentText"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/threadUserIDText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/threadTitleText"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/loadingPlaceholder"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/threadContentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/threadUserIDText"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/loadingPlaceholder"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="14sp"
-        android:text="@string/loadingPlaceholder"/>
+        android:textSize="14sp" />
 
 
 

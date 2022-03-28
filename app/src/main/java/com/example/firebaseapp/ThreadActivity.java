@@ -28,6 +28,7 @@ public class ThreadActivity extends AppCompatActivity {
     Boolean usersThread = false;
     TextView threadTitleText;
     TextView threadContentText;
+    TextView threadUserIDText;
     // Button deleteButton;
     Toolbar detailToolbar;
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
@@ -49,11 +50,12 @@ public class ThreadActivity extends AppCompatActivity {
 //        deleteButton = findViewById(R.id.deleteButton);
         threadTitleText = findViewById(R.id.threadTitleText);
         threadContentText = findViewById(R.id.threadContentText);
+        threadUserIDText = findViewById(R.id.threadUserIDText);
 
         // show back(up) button
         detailToolbar = findViewById(R.id.detailToolbar);
         setSupportActionBar(detailToolbar);
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -61,12 +63,16 @@ public class ThreadActivity extends AppCompatActivity {
         threadsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot value: snapshot.getChildren()){
+                for (DataSnapshot value : snapshot.getChildren()) {
                     if (Objects.equals(value.getKey(), threadId)) {
                         String title = String.valueOf(value.child("title").getValue());
                         String thread = String.valueOf(value.child("thread").getValue());
+                        String ID = String.valueOf(value.child("userId").getValue());
+                        String time = String.valueOf(value.child("time").getValue());
                         threadTitleText.setText(title);
                         threadContentText.setText(thread);
+                        String authorID = "Author: " + ID + "\n" + "Created Time: " + time.substring(0, 16);
+                        threadUserIDText.setText(authorID);
 
                         if (String.valueOf(value.child("userId").getValue()).equals(userId)) {
                             usersThread = true;

@@ -16,6 +16,9 @@ import com.example.models.ThreadClass;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class PostActivity extends AppCompatActivity {
@@ -92,13 +95,15 @@ public class PostActivity extends AppCompatActivity {
                 if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
                     Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_LONG).show();
                 } else {
-                    ThreadClass threadClassObject = new ThreadClass(publicUserID, titleText.getText().toString(), contentText.getText().toString());
+                    Timestamp TS = new Timestamp(System.currentTimeMillis());
+                    ThreadClass threadClassObject = new ThreadClass(publicUserID, titleText.getText().toString(), contentText.getText().toString(), TS.toString());
                     DatabaseReference pushRef = myRef.child(Objects.requireNonNull(myRef.push().getKey()));
                     pushRef.child("userId").setValue(threadClassObject.getUserId());
                     pushRef.child("status").setValue(threadClassObject.getStatus());
                     pushRef.child("rating").setValue(threadClassObject.getRating());
                     pushRef.child("title").setValue(threadClassObject.getTitle());
                     pushRef.child("thread").setValue(threadClassObject.getThread());
+                    pushRef.child("time").setValue(threadClassObject.getTime());
                     Toast.makeText(PostActivity.this, "New post created!", Toast.LENGTH_LONG).show();
                     finish();
                 }
