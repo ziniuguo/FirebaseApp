@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 } else {
                     Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
+                    Log.d("Test", "test");
 
                     //Eventually query for userId from firebase as well
 //                    postIntent.putExtra("USERID", USERID);
