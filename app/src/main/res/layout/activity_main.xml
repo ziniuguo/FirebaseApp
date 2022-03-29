@@ -36,7 +36,7 @@
         android:paddingStart="10dp"
         android:paddingTop="10dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="70dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
