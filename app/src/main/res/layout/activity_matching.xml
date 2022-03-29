@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MatchingActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/study_buddy_preferences"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/education_level"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/radio_primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/primary"/>
+        <RadioButton android:id="@+id/radio_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/secondary"
+            />
+        <RadioButton android:id="@+id/radio_tertiary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Tertiary"
+            />
+        <RadioButton android:id="@+id/radio_university"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/University"
+            />
+    </RadioGroup>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gender_preference"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/radio_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female"/>
+        <RadioButton android:id="@+id/radio_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/male"
+            />
+        <RadioButton android:id="@+id/radio_nil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nil"
+            />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/study_time_preference"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/radio_morning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/morning"/>
+        <RadioButton android:id="@+id/radio_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/night"
+            />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/learning_style_preference"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/radio_visual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/visual"/>
+        <RadioButton android:id="@+id/radio_auditory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auditory"
+            />
+        <RadioButton android:id="@+id/radio_reading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reading"
+            />
+        <RadioButton android:id="@+id/radio_kinesthetic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kinesthetic"
+            />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/buttonsbuddypreference"
+        android:text="Submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+</LinearLayout>
