@@ -19,14 +19,8 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 public class PostActivity extends AppCompatActivity {
-
-
-    // A stupid way. Got better solution?
-    String publicUserID;
-
     EditText contentText;
     EditText titleText;
-//    Button buttonPush;
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
     DatabaseReference myRef = database.getReference("Threads");
 
@@ -38,11 +32,6 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        Intent intent = getIntent();
-        String userId = intent.getStringExtra("USERID");
-        // A stupid way. Got better solution?
-        publicUserID = userId;
-
         // set toolbar back arrow
         postToolbar = findViewById(R.id.postToolbar);
         setSupportActionBar(postToolbar);
@@ -53,27 +42,6 @@ public class PostActivity extends AppCompatActivity {
 
         contentText = findViewById(R.id.threadContent);
         titleText = findViewById(R.id.threadTitle);
-//        buttonPush = findViewById(R.id.pushData);
-//        buttonPush.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
-//                    Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_SHORT).show();
-//                } else if (!titleText.getText().toString().equals("Posts")) {
-//                    ThreadClass threadClassObject = new ThreadClass(userId, titleText.getText().toString(), contentText.getText().toString());
-//                    DatabaseReference pushRef = myRef.child(Objects.requireNonNull(myRef.push().getKey()));
-//                    pushRef.child("userId").setValue(threadClassObject.getUserId());
-//                    pushRef.child("status").setValue(threadClassObject.getStatus());
-//                    pushRef.child("rating").setValue(threadClassObject.getRating());
-//                    pushRef.child("title").setValue(threadClassObject.getTitle());
-//                    pushRef.child("thread").setValue(threadClassObject.getThread());
-//                    finish();
-//                } else {
-//                    Toast.makeText(PostActivity.this, R.string.cannot_name_title_as_posts, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
     }
 
     // don't forget to inflate!
@@ -93,7 +61,7 @@ public class PostActivity extends AppCompatActivity {
                     Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_SHORT).show();
                 } else {
                     Timestamp TS = new Timestamp(System.currentTimeMillis());
-                    ThreadClass threadClassObject = new ThreadClass(publicUserID, titleText.getText().toString(), contentText.getText().toString(), TS.toString());
+                    ThreadClass threadClassObject = new ThreadClass(MainActivity.USERID, titleText.getText().toString(), contentText.getText().toString(), TS.toString());
                     DatabaseReference pushRef = myRef.child(Objects.requireNonNull(myRef.push().getKey()));
                     pushRef.child("userId").setValue(threadClassObject.getUserId());
                     pushRef.child("status").setValue(threadClassObject.getStatus());

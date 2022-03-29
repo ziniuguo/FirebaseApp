@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     // login status and shared preferences
     public static String loginStatus = "N";
     public static String USERID = "refUserId";
+    public static String THREADID = "";
     public static SharedPreferences mPreferences;
 
     TextView adminNotice;
@@ -188,10 +189,11 @@ public class MainActivity extends AppCompatActivity {
                                     int position, long id) {
                 if (indexList.get(position) != null) {
                     Log.d("Click:", indexList.get(position));
-                    postDetail.putExtra("THREADID", indexList.get(position));
+                    THREADID = indexList.get(position);
+//                    postDetail.putExtra("THREADID", indexList.get(position));
 
                     //Eventually query for userId from firebase as well
-                    postDetail.putExtra("USERID", USERID);
+//                    postDetail.putExtra("USERID", USERID);
 
                     startActivity(postDetail);
                 }
@@ -219,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent postIntent = new Intent(MainActivity.this, PostActivity.class);
 
                     //Eventually query for userId from firebase as well
-                    postIntent.putExtra("USERID", USERID);
+//                    postIntent.putExtra("USERID", USERID);
                     startActivity(postIntent);
                 }
                 return true;

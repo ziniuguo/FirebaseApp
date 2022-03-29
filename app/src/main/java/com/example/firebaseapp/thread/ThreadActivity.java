@@ -23,10 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 public class ThreadActivity extends AppCompatActivity {
-
-    // A stupid way. Got better solution?
-    String publicThreadID;
-
     Boolean usersThread = false;
     TextView threadTitleText;
     TextView threadContentText;
@@ -41,15 +37,6 @@ public class ThreadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread);
 
-        Intent intent = getIntent();
-        String threadId = intent.getStringExtra("THREADID");
-
-        // A stupid way. Got better solution?
-        publicThreadID = threadId;
-
-        String userId = intent.getStringExtra("USERID");
-
-//        deleteButton = findViewById(R.id.deleteButton);
         threadTitleText = findViewById(R.id.threadTitleText);
         threadContentText = findViewById(R.id.threadContentText);
         threadUserIDText = findViewById(R.id.threadUserIDText);
@@ -66,7 +53,7 @@ public class ThreadActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot value : snapshot.getChildren()) {
-                    if (Objects.equals(value.getKey(), threadId)) {
+                    if (Objects.equals(value.getKey(), MainActivity.THREADID)) {
                         String title = String.valueOf(value.child("title").getValue());
                         String thread = String.valueOf(value.child("thread").getValue());
                         String ID = String.valueOf(value.child("userId").getValue());
@@ -76,7 +63,7 @@ public class ThreadActivity extends AppCompatActivity {
                         String authorID = "Author: " + ID + "\n" + "Created Time: " + time.substring(0, 16);
                         threadUserIDText.setText(authorID);
 
-                        if (String.valueOf(value.child("userId").getValue()).equals(userId)) {
+                        if (String.valueOf(value.child("userId").getValue()).equals(MainActivity.USERID)) {
                             usersThread = true;
                         }
                     }
@@ -88,17 +75,6 @@ public class ThreadActivity extends AppCompatActivity {
                 Log.w("Post", "Failed to read value.", error.toException());
             }
         });
-
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (usersThread) {
-//                    threadsRef.child(threadId).getRef().removeValue();
-//                    finish();
-//                }
-//            }
-//        });
-
     }
 
 
@@ -119,7 +95,7 @@ public class ThreadActivity extends AppCompatActivity {
                 return true;
             case R.id.deleteButton:
                 if (usersThread) {
-                    threadsRef.child(publicThreadID).getRef().removeValue();
+                    threadsRef.child(MainActivity.THREADID).getRef().removeValue();
                     Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
