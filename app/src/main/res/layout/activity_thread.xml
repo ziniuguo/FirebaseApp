@@ -42,7 +42,7 @@
         android:id="@+id/threadContentScroll"
         android:layout_below="@+id/threadUserIDText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp">
@@ -72,7 +72,7 @@
     <EditText
         android:id="@+id/commentText"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/threadContentScroll"
         android:layout_marginTop="6dp"
         android:gravity="start"
