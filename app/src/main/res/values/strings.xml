@@ -21,4 +21,22 @@
     <string name="commentButton">Post Comment</string>
     <string name="comments">Comments</string>
     <string name="empty_comment">Comment cannot be empty!</string>
+    <string name="study_buddy_preferences">Study Buddy Preferences</string>
+    <string name="education_level">What level of education are you at?</string>
+    <string name="gender_preference">Do you have a gender preference for your study buddy?</string>
+    <string name="study_time_preference">Do you prefer studying in early morning or at night?</string>
+    <string name="learning_style_preference">What is your learning style?</string>
+    <string name="primary">Primary</string>
+    <string name="secondary">Secondary</string>
+    <string name="Tertiary">Tertiary</string>
+    <string name="University">University</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="nil">Nil</string>
+    <string name="morning">Morning</string>
+    <string name="night">Night</string>
+    <string name="visual">Visual</string>
+    <string name="auditory">Auditory</string>
+    <string name="reading">Reading</string>
+    <string name="kinesthetic">Kinesthetic</string>
 </resources>

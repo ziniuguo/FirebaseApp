@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +25,20 @@ public class ProfileActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Toolbar profileToolbar;
     TextView usernameTextView;
+    Button formButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        formButton = findViewById(R.id.buttonprofile);
+        formButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         profileToolbar = findViewById(R.id.profileToolbar);
         setSupportActionBar(profileToolbar);
