@@ -1,6 +1,7 @@
 package com.example.firebaseapp.thread;
 
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -248,4 +249,16 @@ public class ThreadActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor preferenceEditor = MainActivity.mPreferences.edit();
+        preferenceEditor.putString("LoginStatusKey", MainActivity.loginStatus);
+        preferenceEditor.putString("UserIDKey", MainActivity.USERID);
+//        Toast.makeText(MainActivity.this, loginStatus, Toast.LENGTH_SHORT).show();
+        preferenceEditor.apply();
+    }
+
+
 }
