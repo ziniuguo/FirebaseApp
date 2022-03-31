@@ -1,14 +1,16 @@
 package com.example.firebaseapp.thread;
 
-import android.content.Intent;
+
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +21,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.firebaseapp.R;
 import com.example.firebaseapp.thread.models.Comment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -32,10 +39,17 @@ import java.util.Objects;
 
 public class ThreadActivity extends AppCompatActivity {
     Boolean usersThread = false;
+
+    // Check image post
+    Boolean isImagePost;
+
+    // The key of post
+    String thisKey;
+
     TextView threadTitleText;
     TextView threadContentText;
     TextView threadUserIDText;
-    // Button deleteButton;
+    ImageView threadImage;
     Toolbar detailToolbar;
     EditText commentText;
     Button commentButton;
@@ -46,6 +60,9 @@ public class ThreadActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
     DatabaseReference threadsRef = database.getReference("Threads");
     DatabaseReference commentsRef = database.getReference("Comments");
+    // Storage database
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +72,7 @@ public class ThreadActivity extends AppCompatActivity {
         threadTitleText = findViewById(R.id.threadTitleText);
         threadContentText = findViewById(R.id.threadContentText);
         threadUserIDText = findViewById(R.id.threadUserIDText);
+        threadImage = findViewById(R.id.pstImg);
 
         // show back(up) button
         detailToolbar = findViewById(R.id.detailToolbar);
@@ -64,10 +82,11 @@ public class ThreadActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        threadsRef.addValueEventListener(new ValueEventListener() {
+        threadsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot value : snapshot.getChildren()) {
+                    thisKey = value.getKey();
                     if (Objects.equals(value.getKey(), MainActivity.THREADID)) {
                         String title = String.valueOf(value.child("title").getValue());
                         String thread = String.valueOf(value.child("thread").getValue());
@@ -77,7 +96,7 @@ public class ThreadActivity extends AppCompatActivity {
                         threadContentText.setText(thread);
                         String authorID = "Author: " + ID + "\n" + "Created Time: " + time.substring(0, 16);
                         threadUserIDText.setText(authorID);
-
+                        setImage(thisKey);
                         if (String.valueOf(value.child("userId").getValue()).equals(MainActivity.USERID)) {
                             usersThread = true;
                         }
@@ -165,6 +184,38 @@ public class ThreadActivity extends AppCompatActivity {
         });
     }
 
+    private void setImage(String key) {
+        storageReference.child(key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for
+                // set image to imageview
+                isImagePost = true;
+                Picasso.get().load(uri).into(threadImage);
+                // threadImage.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                isImagePost = false;
+            }
+        });
+    }
+
+    private void delImage(String key) {
+        storageReference.child(key).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+            }
+        });
+    }
 
     // don't forget to inflate!
     @Override
@@ -184,6 +235,9 @@ public class ThreadActivity extends AppCompatActivity {
             case R.id.deleteButton:
                 if (usersThread) {
                     threadsRef.child(MainActivity.THREADID).getRef().removeValue();
+                    if (isImagePost) {
+                        delImage(thisKey);
+                    }
                     Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
