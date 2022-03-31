@@ -129,10 +129,10 @@ public class ThreadActivity extends AppCompatActivity {
                     pushRef.child("comment").setValue(comment.getComment());
                     pushRef.child("time").setValue(TS.getTime());
                     Toast.makeText(ThreadActivity.this, "New comment posted!", Toast.LENGTH_SHORT).show();
-                    finish();
-                    overridePendingTransition( 0, 0);
-                    startActivity(getIntent());
-                    overridePendingTransition( 0, 0);
+//                    finish();
+//                    overridePendingTransition( 0, 0);
+//                    startActivity(getIntent());
+//                    overridePendingTransition( 0, 0);
                 }
             }
         });
