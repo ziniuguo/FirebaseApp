@@ -21,6 +21,7 @@ import com.example.firebaseapp.R;
 import com.example.firebaseapp.thread.models.ThreadClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -89,23 +90,22 @@ public class PostActivity extends AppCompatActivity {
                 if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
                     Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_SHORT).show();
                 } else {
-                    Timestamp TS = new Timestamp(System.currentTimeMillis());
-                    ThreadClass threadClassObject = new ThreadClass(MainActivity.USERID, titleText.getText().toString(), contentText.getText().toString(), TS.toString());
                     String myKey = myRef.push().getKey();
-                    DatabaseReference pushRef = myRef.child(Objects.requireNonNull(myKey));
-                    pushRef.child("userId").setValue(threadClassObject.getUserId());
-                    pushRef.child("status").setValue(threadClassObject.getStatus());
-                    pushRef.child("rating").setValue(threadClassObject.getRating());
-                    pushRef.child("title").setValue(threadClassObject.getTitle());
-                    pushRef.child("thread").setValue(threadClassObject.getThread());
-                    pushRef.child("time").setValue(threadClassObject.getTime());
+
+                    /*
+                    逻辑是这样的
+                    upload image既上传image又上传text
+                    upload text只是上传text
+                    upload image会在success listener接收到成功后再upload text，Toast，再finish
+                    而upload text没有toast和finish要手动加
+                     */
                     if (filePath != null) {
                         uploadImage(myKey);
                     } else {
+                        uploadText(myKey);
                         Toast.makeText(PostActivity.this, "New post created!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
-
                 }
                 return true;
             case android.R.id.home:
@@ -145,6 +145,19 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    private void uploadText (String myKey) {
+        Timestamp TS = new Timestamp(System.currentTimeMillis());
+        ThreadClass threadClassObject = new ThreadClass(MainActivity.USERID, titleText.getText().toString(), contentText.getText().toString(), TS.toString());
+
+        DatabaseReference pushRef = myRef.child(Objects.requireNonNull(myKey));
+        pushRef.child("userId").setValue(threadClassObject.getUserId());
+        pushRef.child("status").setValue(threadClassObject.getStatus());
+        pushRef.child("rating").setValue(threadClassObject.getRating());
+        pushRef.child("title").setValue(threadClassObject.getTitle());
+        pushRef.child("thread").setValue(threadClassObject.getThread());
+        pushRef.child("time").setValue(threadClassObject.getTime());
+    }
+
     private void uploadImage(String myKey) {
         // Code for showing progressDialog while uploading
         ProgressDialog progressDialog
@@ -167,8 +180,8 @@ public class PostActivity extends AppCompatActivity {
                                 // Image uploaded successfully
                                 // Dismiss dialog
                                 progressDialog.dismiss();
+                                uploadText(myKey);
                                 Toast.makeText(PostActivity.this, "New image post created!", Toast.LENGTH_SHORT).show();
-
                                 finish();
                             }
                         })
