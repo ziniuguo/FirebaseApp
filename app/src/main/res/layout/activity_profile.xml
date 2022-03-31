@@ -15,6 +15,7 @@
         android:theme="@style/ToolbarTheme">
     </androidx.appcompat.widget.Toolbar>
 
+
     <TextView
         android:layout_below="@id/profileToolbar"
         android:paddingTop="20dp"
@@ -34,6 +35,15 @@
         android:textSize="50sp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
+
+    <Button
+        android:id="@+id/buttonprofile"
+        android:text="Update Study Buddy Preferences"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
