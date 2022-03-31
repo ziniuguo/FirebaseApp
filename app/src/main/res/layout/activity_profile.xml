@@ -28,6 +28,7 @@
         android:layout_centerInParent="true"/>
 
     <TextView
+        android:id="@+id/profilepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameTextView"
@@ -36,14 +37,14 @@
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
 
+
     <Button
         android:id="@+id/buttonprofile"
-        android:text="Update Study Buddy Preferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_below="@+id/profilepage"
+        android:text="Update Study Buddy Preferences"
         />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
