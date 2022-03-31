@@ -32,13 +32,13 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        formButton = findViewById(R.id.buttonprofile);
-        formButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        formButton = findViewById(R.id.buttonprofile);
+//        formButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         profileToolbar = findViewById(R.id.profileToolbar);
         setSupportActionBar(profileToolbar);
