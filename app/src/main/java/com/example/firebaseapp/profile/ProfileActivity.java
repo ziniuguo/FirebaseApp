@@ -138,6 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     // shared pref edit. If you quit on this page, you still need to store login status!
+    // don't delete this.
     @Override
     protected void onPause() {
         super.onPause();

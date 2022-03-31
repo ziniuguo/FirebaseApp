@@ -76,7 +76,8 @@
         android:layout_below="@+id/threadContentScroll"
         android:layout_marginTop="6dp"
         android:gravity="start"
-        android:hint="@string/comment"/>
+        android:hint="@string/comment"
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/commentButton"
