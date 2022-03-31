@@ -17,4 +17,8 @@
     <string name="profile_activity_name">Me</string>
     <string name="logout">logout</string>
     <string name="do_your_profile_page_here">DO YOUR PROFILE PAGE HERE</string>
+    <string name="comment">Comment here</string>
+    <string name="commentButton">Post Comment</string>
+    <string name="comments">Comments</string>
+    <string name="empty_comment">Comment cannot be empty!</string>
 </resources>

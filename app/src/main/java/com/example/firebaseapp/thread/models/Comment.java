@@ -7,7 +7,7 @@ public class Comment implements Rating {
     private int rating;
     private String comment;
 
-    Comment(String userId, String threadId, String comment) {
+    public Comment(String userId, String threadId, String comment) {
         this.userId = userId;
         this.threadId = threadId;
         this.status = "Active";
