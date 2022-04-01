@@ -1,5 +1,6 @@
-package com.example.firebaseapp;
+package com.example.firebaseapp.thread;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.firebaseapp.R;
+import com.example.firebaseapp.profile.ProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,26 +72,41 @@ public class LoginActivity extends AppCompatActivity {
                         boolean exist = false;
                         for (DataSnapshot value : dataSnapshot.getChildren()) {
                             if (Objects.equals(value.child("userID").getValue(), IDeditText.getText().toString())) {
-                                // Toast.makeText(LoginActivity.this, "Account Exist", Toast.LENGTH_LONG).show();
+                                // Toast.makeText(LoginActivity.this, "Account Exist", Toast.LENGTH_SHORT).show();
                                 exist = true;
                                 if (Objects.equals(value.child("userPwd").getValue(), pwd.getText().toString())) {
                                     MainActivity.loginStatus = "Y";
                                     MainActivity.USERID = IDeditText.getText().toString();
-                                    Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+
                                     finish();
+                                    // login以后自动去Profile界面。这里还是要override transition，不然动画不对（因为是新创建一个activity去ProfileActivity界面）
+                                    startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                                    overridePendingTransition(0,0);
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Wrong username or password!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "Wrong username or password!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
                         if (!exist) {
-                            DatabaseReference pushRef = usersRef.child(Objects.requireNonNull(usersRef.push().getKey()));
-                            pushRef.child("userID").setValue(IDeditText.getText().toString());
-                            pushRef.child("userPwd").setValue(pwd.getText().toString());
-                            Toast.makeText(LoginActivity.this, "Signup and login success", Toast.LENGTH_LONG).show();
-                            MainActivity.loginStatus = "Y";
-                            MainActivity.USERID = IDeditText.getText().toString();
-                            finish();
+                            if (IDeditText.getText().toString().equals("") || pwd.getText().toString().equals("")) {
+                                Toast.makeText(LoginActivity.this, "Username and password cannot be empty!", Toast.LENGTH_SHORT).show();
+                            } else if (IDeditText.getText().toString().length() != 7) {
+                                Toast.makeText(LoginActivity.this, "Please use your studentID as username", Toast.LENGTH_SHORT).show();
+                            } else {
+                                DatabaseReference pushRef = usersRef.child(Objects.requireNonNull(usersRef.push().getKey()));
+                                pushRef.child("userID").setValue(IDeditText.getText().toString());
+                                pushRef.child("userPwd").setValue(pwd.getText().toString());
+                                MainActivity.loginStatus = "Y";
+                                MainActivity.USERID = IDeditText.getText().toString();
+                                Toast.makeText(LoginActivity.this, "Signup and login success", Toast.LENGTH_SHORT).show();
+
+                                finish();
+                                // login以后自动去Profile界面。这里还是要override transition，不然动画不对（因为是新创建一个activity去ProfileActivity界面）
+                                startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                                overridePendingTransition(0,0);
+
+                            }
                         }
                     }
 
@@ -101,12 +119,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 return true;
             case android.R.id.home:
+
                 // onBackPressed();
                 // i think onBackPressed also can lah
                 finish();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.
+
+                        onOptionsItemSelected(item);
         }
     }
 }

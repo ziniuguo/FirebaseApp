@@ -1,4 +1,4 @@
-package com.example.models;
+package com.example.firebaseapp.thread.models;
 
 public interface Subject {
     void register(Observer o);

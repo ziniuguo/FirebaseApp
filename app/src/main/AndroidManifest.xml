@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.firebaseapp">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +14,7 @@
         android:theme="@style/Theme.FirebaseApp">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".thread.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
@@ -22,25 +25,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PostActivity"
+            android:name=".thread.PostActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".thread.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="@string/post_activity_name"/>
         <activity
-            android:name=".ThreadActivity"
+            android:name=".thread.ThreadActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".thread.MainActivity"
             android:label="@string/detail_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".thread.LoginActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".thread.MainActivity"
             android:label="@string/login_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/profile_activity_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
+
 
 </manifest>

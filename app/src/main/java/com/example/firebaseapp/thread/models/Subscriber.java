@@ -1,4 +1,4 @@
-package com.example.models;
+package com.example.firebaseapp.thread.models;
 
 import java.util.ArrayList;
 

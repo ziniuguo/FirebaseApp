@@ -1,17 +1,18 @@
-package com.example.models;
+package com.example.firebaseapp.thread.models;
 
-public class ThreadClass implements Rating {
+public class Comment implements Rating {
     private final String userId;
+    private final String threadId;
     private String status;
     private int rating;
-    private String title;
-    private String thread;
+    private String comment;
 
-    public ThreadClass(String userId, String title, String thread) {
+    public Comment(String userId, String threadId, String comment) {
         this.userId = userId;
+        this.threadId = threadId;
         this.status = "Active";
-        this.title = title;
-        this.thread = thread;
+        this.rating = 0;
+        this.comment = comment;
     }
 
     @Override
@@ -38,19 +39,15 @@ public class ThreadClass implements Rating {
         return this.userId;
     }
 
-    public String getTitle() {
-        return this.title;
+    public String getThreadId() {
+        return this.threadId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getComment() {
+        return this.comment;
     }
 
-    public String getThread() {
-        return this.thread;
-    }
-
-    public void setThread(String thread) {
-        this.thread = thread;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
