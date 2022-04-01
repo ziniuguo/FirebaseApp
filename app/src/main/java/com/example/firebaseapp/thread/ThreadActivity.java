@@ -1,6 +1,7 @@
 package com.example.firebaseapp.thread;
 
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.firebaseapp.R;
+import com.example.firebaseapp.profile.ProfileActivity;
 import com.example.firebaseapp.thread.models.Comment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +47,6 @@ public class ThreadActivity extends AppCompatActivity {
 
     // The key of post
     String thisKey;
-    int commentCount = 0;
 
     TextView threadTitleText;
     TextView threadContentText;
@@ -145,8 +147,8 @@ public class ThreadActivity extends AppCompatActivity {
 
                 int viewCount = dynamicLayout.getChildCount();
                 if (viewCount != 3) {
-                    dynamicLayout.removeViews(3, dynamicLayout.getChildCount() - 3);
-
+                    dynamicLayout.removeViews(3,
+                            dynamicLayout.getChildCount() - 3);
                 }
                 for (DataSnapshot value : dataSnapshot.getChildren()) {
                     if (Objects.equals(value.child("status").getValue(), "Active") && Objects.equals(value.child("threadId").getValue(), MainActivity.THREADID)) {
@@ -159,14 +161,33 @@ public class ThreadActivity extends AppCompatActivity {
                                         + "\n"
                         );
 
-                        commentView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                value.getRef().removeValue();
-                                Toast.makeText(ThreadActivity.this, "you want to delete: " + value.getKey(), Toast.LENGTH_SHORT).show();
-                                view.setOnClickListener(null);
-                            }
-                        });
+                        if (MainActivity.USERID == value.child("userId").getValue()) {
+                            commentView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    new AlertDialog.Builder(ThreadActivity.this)
+                                            .setTitle("Delete Comment")
+                                            .setMessage("Do you want to delete this comment?\n\n" +
+                                                    "For test use:\n\ncomment firebase ref:\n\n" + value.getRef()
+                                                    + "\n\nComment KEY:\n\n" + value.getKey()
+                                            )
+
+                                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                                            // The dialog is automatically dismissed when a dialog button is clicked.
+                                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    value.getRef().removeValue();
+                                                    Toast.makeText(ThreadActivity.this, "you want to delete: " + value.getKey(), Toast.LENGTH_SHORT).show();
+                                                    view.setOnClickListener(null);
+                                                }
+                                            })
+                                            // A null listener allows the button to dismiss the dialog and take no further action.
+                                            .setNegativeButton(android.R.string.no, null)
+                                            .setIcon(R.drawable.ic_delete_black)
+                                            .show();
+                                }
+                            });
+                        }
                         dynamicLayout.addView(commentView);
 
                     }
