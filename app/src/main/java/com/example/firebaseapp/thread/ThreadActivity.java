@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.firebaseapp.R;
-import com.example.firebaseapp.profile.ProfileActivity;
 import com.example.firebaseapp.thread.models.Comment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,8 +44,6 @@ public class ThreadActivity extends AppCompatActivity {
     // Check image post
     Boolean isImagePost;
 
-    // The key of post
-    String thisKey;
 
     TextView threadTitleText;
     TextView threadContentText;
@@ -90,7 +87,6 @@ public class ThreadActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot value : snapshot.getChildren()) {
-                    thisKey = value.getKey();
                     if (Objects.equals(value.getKey(), MainActivity.THREADID)) {
                         String title = String.valueOf(value.child("title").getValue());
                         String thread = String.valueOf(value.child("thread").getValue());
@@ -100,10 +96,11 @@ public class ThreadActivity extends AppCompatActivity {
                         threadContentText.setText(thread);
                         String authorID = "Author: " + ID + "\n" + "Created Time: " + time.substring(0, 16);
                         threadUserIDText.setText(authorID);
-                        setImage(thisKey);
+                        setImage(MainActivity.THREADID);
                         if (String.valueOf(value.child("userId").getValue()).equals(MainActivity.USERID)) {
                             usersThread = true;
                         }
+                        break;
                     }
                 }
             }
@@ -258,28 +255,48 @@ public class ThreadActivity extends AppCompatActivity {
                 return true;
             case R.id.deleteButton:
                 if (usersThread) {
-                    commentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot value : snapshot.getChildren()) {
+                    new AlertDialog.Builder(ThreadActivity.this)
+                            .setTitle("Delete Thread")
+                            .setMessage("Do you want to delete this Thread?\n\n" +
+                                    "For test use:"
+                                    + "\n\nMainAc ThreadID:\n\n"
+                                    + MainActivity.THREADID
+                            )
 
-                                if (Objects.equals(value.child("threadId").getValue(), MainActivity.THREADID)) {
-                                    value.getRef().removeValue();
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    commentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for (DataSnapshot value : snapshot.getChildren()) {
+
+                                                if (Objects.equals(value.child("threadId").getValue(), MainActivity.THREADID)) {
+                                                    value.getRef().removeValue();
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    threadsRef.child(MainActivity.THREADID).getRef().removeValue();
+                                    if (isImagePost) {
+                                        delImage(MainActivity.THREADID);
+                                    }
+                                    Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
-                            }
-                        }
+                            })
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(R.drawable.ic_delete_black)
+                            .show();
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    threadsRef.child(MainActivity.THREADID).getRef().removeValue();
-                    if (isImagePost) {
-                        delImage(thisKey);
-                    }
-                    Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_SHORT).show();
-                    finish();
                 } else {
                     Toast.makeText(ThreadActivity.this, "No Permission", Toast.LENGTH_SHORT).show();
                 }
