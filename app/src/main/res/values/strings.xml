@@ -39,4 +39,5 @@
     <string name="auditory">Auditory</string>
     <string name="reading">Reading</string>
     <string name="kinesthetic">Kinesthetic</string>
+    <string name="comment_placeholder">Nothing is here...</string>
 </resources>

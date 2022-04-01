@@ -81,15 +81,20 @@ public class MatchingActivity extends AppCompatActivity {
                             for (DataSnapshot value : dataSnapshot.getChildren()) {
                                 if (Objects.equals(value.child("userID").getValue(), MainActivity.USERID)) {
                                     Toast.makeText(MatchingActivity.this, "Personal info updated!", Toast.LENGTH_SHORT).show();
-                                    String currentKey = value.getKey();
-                                    usersRef.child(Objects.requireNonNull(currentKey))
-                                            .child("eduLevel").setValue(rT1);
-                                    usersRef.child(Objects.requireNonNull(currentKey))
-                                            .child("gender").setValue(rT2);
-                                    usersRef.child(Objects.requireNonNull(currentKey))
-                                            .child("studyTime").setValue(rT3);
-                                    usersRef.child(Objects.requireNonNull(currentKey))
-                                            .child("studyStyle").setValue(rT4);
+                                    value.getRef().child("eduLevel").setValue(rT1);
+                                    value.getRef().child("gender").setValue(rT2);
+                                    value.getRef().child("studyTime").setValue(rT3);
+                                    value.getRef().child("studyStyle").setValue(rT4);
+                                    // An alternative
+//                                    String currentKey = value.getKey();
+//                                    usersRef.child(Objects.requireNonNull(currentKey))
+//                                            .child("eduLevel").setValue(rT1);
+//                                    usersRef.child(Objects.requireNonNull(currentKey))
+//                                            .child("gender").setValue(rT2);
+//                                    usersRef.child(Objects.requireNonNull(currentKey))
+//                                            .child("studyTime").setValue(rT3);
+//                                    usersRef.child(Objects.requireNonNull(currentKey))
+//                                            .child("studyStyle").setValue(rT4);
                                     break;
                                 }
                             }

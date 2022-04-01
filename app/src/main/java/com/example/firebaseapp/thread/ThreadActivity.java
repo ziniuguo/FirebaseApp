@@ -137,35 +137,34 @@ public class ThreadActivity extends AppCompatActivity {
         });
 
 
-
         commentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                if (commentCount > 0){
-                    dynamicLayout.removeViews(3, commentCount);
-                    commentCount = 0;
+                int viewCount = dynamicLayout.getChildCount();
+                if (viewCount != 3) {
+                    dynamicLayout.removeViews(3, dynamicLayout.getChildCount() - 3);
+
                 }
-
-
-
                 for (DataSnapshot value : dataSnapshot.getChildren()) {
                     if (Objects.equals(value.child("status").getValue(), "Active") && Objects.equals(value.child("threadId").getValue(), MainActivity.THREADID)) {
 
                         TextView commentView = new TextView(ThreadActivity.this);
                         commentView.setText(
-                                (String) value.child("userId").getValue()
-                                + ":\n"
-                                + (String) value.child("comment").getValue()
-                                + "\n"
+                                value.child("userId").getValue()
+                                        + ":\n"
+                                        + value.child("comment").getValue()
+                                        + "\n"
                         );
-                        commentCount += 1;
+
                         commentView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                value.getRef().removeValue();
                                 Toast.makeText(ThreadActivity.this, "you want to delete: " + value.getKey(), Toast.LENGTH_SHORT).show();
+                                view.setOnClickListener(null);
                             }
                         });
                         dynamicLayout.addView(commentView);
@@ -173,9 +172,9 @@ public class ThreadActivity extends AppCompatActivity {
                     }
                 }
 
-                if (commentCount == 0) {
+                if (dynamicLayout.getChildCount() == 3) {
                     TextView placeholderView = new TextView(ThreadActivity.this);
-                    placeholderView.setText("Nothing is here...");
+                    placeholderView.setText(R.string.comment_placeholder);
                     dynamicLayout.addView(placeholderView);
                 }
             }
