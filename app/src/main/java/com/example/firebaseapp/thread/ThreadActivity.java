@@ -161,7 +161,7 @@ public class ThreadActivity extends AppCompatActivity {
                                         + "\n"
                         );
 
-                        if (MainActivity.USERID == value.child("userId").getValue()) {
+                        if (Objects.equals(value.child("userId").getValue(), MainActivity.USERID)) {
                             commentView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -258,6 +258,22 @@ public class ThreadActivity extends AppCompatActivity {
                 return true;
             case R.id.deleteButton:
                 if (usersThread) {
+                    commentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot value : snapshot.getChildren()) {
+
+                                if (Objects.equals(value.child("threadId").getValue(), MainActivity.THREADID)) {
+                                    value.getRef().removeValue();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                     threadsRef.child(MainActivity.THREADID).getRef().removeValue();
                     if (isImagePost) {
                         delImage(thisKey);
