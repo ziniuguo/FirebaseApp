@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MatchingActivity">
+    tools:context=".match.MatchingActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/matchToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorToolbar"
+        android:theme="@style/ToolbarTheme">
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,7 +31,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    <RadioGroup
+        android:id="@+id/radio_edu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -58,7 +67,8 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    <RadioGroup
+        android:id="@+id/radio_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -87,7 +97,8 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    <RadioGroup
+        android:id="@+id/radio_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -112,7 +123,8 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    <RadioGroup
+        android:id="@+id/radio_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -140,7 +152,7 @@
 
 
     <Button
-        android:id="@+id/buttonsbuddypreference"
+        android:id="@+id/btnMatch"
         android:text="Submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
