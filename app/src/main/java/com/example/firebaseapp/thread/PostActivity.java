@@ -1,6 +1,7 @@
 package com.example.firebaseapp.thread;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,12 +9,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -21,18 +23,20 @@ import com.example.firebaseapp.R;
 import com.example.firebaseapp.thread.models.ThreadClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Objects;
-import java.util.UUID;
 
 public class PostActivity extends AppCompatActivity {
     EditText contentText;
@@ -44,18 +48,22 @@ public class PostActivity extends AppCompatActivity {
     Toolbar postToolbar;
 
     // add image to post
-
-
     Uri filePath;
     final int PICK_IMAGE_REQUEST = 22;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();
+
+    // test image
+    ImageView uploadImageView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        uploadImageView = findViewById(R.id.uploadImg);
+//        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/android-firebase-9538d.appspot.com/o/test.png?alt=media&token=3e22dfbc-6a0f-4ba1-bd00-b12a4fd409f5").into(uploadImageView);
 
         // set toolbar back arrow
         postToolbar = findViewById(R.id.postToolbar);
@@ -67,6 +75,37 @@ public class PostActivity extends AppCompatActivity {
 
         contentText = findViewById(R.id.threadContent);
         titleText = findViewById(R.id.threadTitle);
+
+        uploadImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (filePath == null){
+                    SelectImage();
+                } else {
+                    new AlertDialog.Builder(PostActivity.this)
+                            .setTitle("Delete Thread")
+                            .setMessage("Do you want to remove this image from your post?\n\n" +
+                                    "For test use:"
+                                    + "\n\nfilePath:\n\n"
+                                    + filePath
+                            )
+
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    filePath = null;
+                                    uploadImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_upload_img));
+                                }
+                            })
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(R.drawable.ic_delete_black)
+                            .show();
+                }
+
+            }
+        });
     }
 
     // don't forget to inflate!
@@ -81,11 +120,9 @@ public class PostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-
-            case R.id.add_image:
-                Toast.makeText(PostActivity.this, "Select an image from your gallery", Toast.LENGTH_SHORT).show();
-                SelectImage();
-                return true;
+//            case R.id.add_image:
+//                SelectImage();
+//                return true;
             case R.id.action_send:
                 if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
                     Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_SHORT).show();
@@ -119,6 +156,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void SelectImage() {
+        Toast.makeText(PostActivity.this, "Select an image from your gallery", Toast.LENGTH_SHORT).show();
         Intent selectIntent = new Intent();
         selectIntent.setType("image/*");
         selectIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -141,6 +179,22 @@ public class PostActivity extends AppCompatActivity {
 
             // Get the Uri of data
             filePath = data.getData();
+            try {
+
+                // Setting image on image view using Bitmap
+                Bitmap bitmap = MediaStore
+                        .Images
+                        .Media
+                        .getBitmap(
+                                getContentResolver(),
+                                filePath);
+                uploadImageView.setImageBitmap(bitmap);
+            }
+
+            catch (IOException e) {
+                // Log the exception
+                e.printStackTrace();
+            }
         }
 
     }
