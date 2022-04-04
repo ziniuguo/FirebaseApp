@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -40,17 +42,19 @@
 
     <ScrollView
         android:id="@+id/threadContentScroll"
-        android:layout_below="@+id/threadUserIDText"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@+id/threadUserIDText"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/LLayout">
 
             <TextView
                 android:id="@+id/threadContentText"
@@ -61,51 +65,49 @@
                 android:textSize="14sp" />
 
             <ImageView
+                android:paddingTop="10dp"
                 android:id="@+id/pstImg"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:paddingTop="10dp"
+                android:text="@string/comments"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="20sp" />
+
+
+
 
 
         </LinearLayout>
     </ScrollView>
 
+
     <EditText
         android:id="@+id/commentText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/threadContentScroll"
-        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/commentButton"
         android:gravity="start"
         android:hint="@string/comment"
-        android:minHeight="48dp" />
+        android:maxLines="1"
+        android:inputType="text"/>
 
     <Button
         android:id="@+id/commentButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/commentText"
-        android:layout_gravity="center"
-        android:layout_marginTop="-1dp"
-        android:text="@string/commentButton"/>
-
-    <TextView
-        android:id="@+id/comments"
-        android:text="@string/comments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/commentButton"/>
-
-    <ListView
-        android:id="@+id/simpleListViewComments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/comments"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="10dp" />
-
-
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="send" />
 
 
 </RelativeLayout>

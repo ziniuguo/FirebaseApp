@@ -1,6 +1,7 @@
 package com.example.firebaseapp.thread;
 
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -34,8 +36,6 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class ThreadActivity extends AppCompatActivity {
@@ -44,8 +44,6 @@ public class ThreadActivity extends AppCompatActivity {
     // Check image post
     Boolean isImagePost;
 
-    // The key of post
-    String thisKey;
 
     TextView threadTitleText;
     TextView threadContentText;
@@ -54,9 +52,9 @@ public class ThreadActivity extends AppCompatActivity {
     Toolbar detailToolbar;
     EditText commentText;
     Button commentButton;
-    ListView postList;
-    ArrayList<String> titleList = new ArrayList<>();
-    ArrayList<String> contentList = new ArrayList<>();
+
+
+    LinearLayout dynamicLayout;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
     DatabaseReference threadsRef = database.getReference("Threads");
@@ -74,6 +72,8 @@ public class ThreadActivity extends AppCompatActivity {
         threadContentText = findViewById(R.id.threadContentText);
         threadUserIDText = findViewById(R.id.threadUserIDText);
         threadImage = findViewById(R.id.pstImg);
+        dynamicLayout = findViewById(R.id.LLayout);
+
 
         // show back(up) button
         detailToolbar = findViewById(R.id.detailToolbar);
@@ -87,7 +87,6 @@ public class ThreadActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot value : snapshot.getChildren()) {
-                    thisKey = value.getKey();
                     if (Objects.equals(value.getKey(), MainActivity.THREADID)) {
                         String title = String.valueOf(value.child("title").getValue());
                         String thread = String.valueOf(value.child("thread").getValue());
@@ -97,10 +96,11 @@ public class ThreadActivity extends AppCompatActivity {
                         threadContentText.setText(thread);
                         String authorID = "Author: " + ID + "\n" + "Created Time: " + time.substring(0, 16);
                         threadUserIDText.setText(authorID);
-                        setImage(thisKey);
+                        setImage(MainActivity.THREADID);
                         if (String.valueOf(value.child("userId").getValue()).equals(MainActivity.USERID)) {
                             usersThread = true;
                         }
+                        break;
                     }
                 }
             }
@@ -130,51 +130,71 @@ public class ThreadActivity extends AppCompatActivity {
                     pushRef.child("comment").setValue(comment.getComment());
                     pushRef.child("time").setValue(TS.getTime());
                     Toast.makeText(ThreadActivity.this, "New comment posted!", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                    overridePendingTransition( 0, 0);
-//                    startActivity(getIntent());
-//                    overridePendingTransition( 0, 0);
+                    commentText.setText("");
                 }
             }
         });
 
-        //View comments list
-        postList = findViewById(R.id.simpleListViewComments);
 
         commentsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                titleList.clear();
-                contentList.clear();
+
+                int viewCount = dynamicLayout.getChildCount();
+                if (viewCount != 3) {
+                    dynamicLayout.removeViews(3,
+                            dynamicLayout.getChildCount() - 3);
+                }
                 for (DataSnapshot value : dataSnapshot.getChildren()) {
                     if (Objects.equals(value.child("status").getValue(), "Active") && Objects.equals(value.child("threadId").getValue(), MainActivity.THREADID)) {
 
-                        // this is stupid, it eats up time complexity O(n)
-                        // and space complexity O(1).
-                        // I should use a different structure like queue.
-                        // But nvm, probably we can solve this problem
-                        // if we want to implement sorting function later.
+                        TextView commentView = new TextView(ThreadActivity.this);
+                        commentView.setText(
+                                value.child("userId").getValue()
+                                        + ":\n"
+                                        + value.child("comment").getValue()
+                                        + "\n"
+                        );
 
-                        Collections.reverse(titleList);
-                        titleList.add((String) value.child("userId").getValue());
-                        Collections.reverse(titleList);
+                        if (Objects.equals(value.child("userId").getValue(), MainActivity.USERID)) {
+                            commentView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    new AlertDialog.Builder(ThreadActivity.this)
+                                            .setTitle("Delete Comment")
+                                            .setMessage("Do you want to delete this comment?\n\n" +
+                                                    "For test use:\n\ncomment firebase ref:\n\n" + value.getRef()
+                                                    + "\n\nComment KEY:\n\n" + value.getKey()
+                                            )
 
-                        Collections.reverse(contentList);
-                        contentList.add((String) value.child("comment").getValue());
-                        Collections.reverse(contentList);
+                                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                                            // The dialog is automatically dismissed when a dialog button is clicked.
+                                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    value.getRef().removeValue();
+                                                    Toast.makeText(ThreadActivity.this, "you want to delete: " + value.getKey(), Toast.LENGTH_SHORT).show();
+                                                    view.setOnClickListener(null);
+                                                }
+                                            })
+                                            // A null listener allows the button to dismiss the dialog and take no further action.
+                                            .setNegativeButton(android.R.string.no, null)
+                                            .setIcon(R.drawable.ic_delete_black)
+                                            .show();
+                                }
+                            });
+                        }
+                        dynamicLayout.addView(commentView);
 
                     }
                 }
-//                ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this,
-//                        R.layout.activity_listview, R.id.listText, titleList);
 
-                MyAdapter myAdapter = new MyAdapter(ThreadActivity.this, R.layout.activity_listviewcomments,
-                        R.id.listTextComments, titleList, contentList);
-
-
-                postList.setAdapter(myAdapter);
+                if (dynamicLayout.getChildCount() == 3) {
+                    TextView placeholderView = new TextView(ThreadActivity.this);
+                    placeholderView.setText(R.string.comment_placeholder);
+                    dynamicLayout.addView(placeholderView);
+                }
             }
 
             @Override
@@ -235,12 +255,48 @@ public class ThreadActivity extends AppCompatActivity {
                 return true;
             case R.id.deleteButton:
                 if (usersThread) {
-                    threadsRef.child(MainActivity.THREADID).getRef().removeValue();
-                    if (isImagePost) {
-                        delImage(thisKey);
-                    }
-                    Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_SHORT).show();
-                    finish();
+                    new AlertDialog.Builder(ThreadActivity.this)
+                            .setTitle("Delete Thread")
+                            .setMessage("Do you want to delete this Thread?\n\n" +
+                                    "For test use:"
+                                    + "\n\nMainAc ThreadID:\n\n"
+                                    + MainActivity.THREADID
+                            )
+
+                            // Specifying a listener allows you to take an action before dismissing the dialog.
+                            // The dialog is automatically dismissed when a dialog button is clicked.
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    commentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for (DataSnapshot value : snapshot.getChildren()) {
+
+                                                if (Objects.equals(value.child("threadId").getValue(), MainActivity.THREADID)) {
+                                                    value.getRef().removeValue();
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    threadsRef.child(MainActivity.THREADID).getRef().removeValue();
+                                    if (isImagePost) {
+                                        delImage(MainActivity.THREADID);
+                                    }
+                                    Toast.makeText(ThreadActivity.this, "Post deleted successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            })
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(R.drawable.ic_delete_black)
+                            .show();
+
                 } else {
                     Toast.makeText(ThreadActivity.this, "No Permission", Toast.LENGTH_SHORT).show();
                 }

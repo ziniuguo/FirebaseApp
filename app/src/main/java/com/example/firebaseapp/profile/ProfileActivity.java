@@ -1,6 +1,7 @@
 package com.example.firebaseapp.profile;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.firebaseapp.R;
+import com.example.firebaseapp.match.MatchingActivity;
 import com.example.firebaseapp.thread.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -32,13 +34,13 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-//        formButton = findViewById(R.id.buttonprofile);
-//        formButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        formButton = findViewById(R.id.buttonProfile);
+        formButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileActivity.this, MatchingActivity.class));
+            }
+        });
 
         profileToolbar = findViewById(R.id.profileToolbar);
         setSupportActionBar(profileToolbar);
