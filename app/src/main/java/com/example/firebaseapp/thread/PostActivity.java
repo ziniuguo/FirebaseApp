@@ -23,19 +23,16 @@ import com.example.firebaseapp.R;
 import com.example.firebaseapp.thread.models.ThreadClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PostActivity extends AppCompatActivity {
@@ -48,7 +45,7 @@ public class PostActivity extends AppCompatActivity {
     Toolbar postToolbar;
 
     // add image to post
-    Uri filePath;
+    ArrayList<Uri> filePath = new ArrayList<>();
     final int PICK_IMAGE_REQUEST = 22;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();
@@ -63,7 +60,6 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         uploadImageView = findViewById(R.id.uploadImg);
-//        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/android-firebase-9538d.appspot.com/o/test.png?alt=media&token=3e22dfbc-6a0f-4ba1-bd00-b12a4fd409f5").into(uploadImageView);
 
         // set toolbar back arrow
         postToolbar = findViewById(R.id.postToolbar);
@@ -79,7 +75,7 @@ public class PostActivity extends AppCompatActivity {
         uploadImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (filePath == null){
+                if (filePath.isEmpty()) {
                     SelectImage();
                 } else {
                     new AlertDialog.Builder(PostActivity.this)
@@ -94,7 +90,7 @@ public class PostActivity extends AppCompatActivity {
                             // The dialog is automatically dismissed when a dialog button is clicked.
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    filePath = null;
+                                    filePath.clear();
                                     uploadImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_upload_img));
                                 }
                             })
@@ -120,9 +116,6 @@ public class PostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-//            case R.id.add_image:
-//                SelectImage();
-//                return true;
             case R.id.action_send:
                 if (titleText.getText().toString().equals("") || contentText.getText().toString().equals("")) {
                     Toast.makeText(PostActivity.this, R.string.empty_title_or_content, Toast.LENGTH_SHORT).show();
@@ -136,7 +129,7 @@ public class PostActivity extends AppCompatActivity {
                     upload image会在success listener接收到成功后再upload text，Toast，再finish
                     而upload text没有toast和finish要手动加
                      */
-                    if (filePath != null) {
+                    if (!filePath.isEmpty()) {
                         uploadImage(myKey);
                     } else {
                         uploadText(myKey);
@@ -178,7 +171,7 @@ public class PostActivity extends AppCompatActivity {
                 && data.getData() != null) {
 
             // Get the Uri of data
-            filePath = data.getData();
+            filePath.add(data.getData());
             try {
 
                 // Setting image on image view using Bitmap
@@ -187,11 +180,10 @@ public class PostActivity extends AppCompatActivity {
                         .Media
                         .getBitmap(
                                 getContentResolver(),
-                                filePath);
-                uploadImageView.setImageBitmap(bitmap);
-            }
+                                filePath.get(0));
 
-            catch (IOException e) {
+                uploadImageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();
             }
@@ -199,7 +191,7 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-    private void uploadText (String myKey) {
+    private void uploadText(String myKey) {
         Timestamp TS = new Timestamp(System.currentTimeMillis());
         ThreadClass threadClassObject = new ThreadClass(MainActivity.USERID, titleText.getText().toString(), contentText.getText().toString(), TS.toString());
 
@@ -224,7 +216,7 @@ public class PostActivity extends AppCompatActivity {
 
         // adding listeners on upload
         // or failure of image
-        ref.putFile(filePath)
+        ref.putFile(filePath.get(0))
                 .addOnSuccessListener(
                         new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -261,7 +253,7 @@ public class PostActivity extends AppCompatActivity {
                             // percentage on the dialog box
                             @Override
                             public void onProgress(
-                                    UploadTask.TaskSnapshot taskSnapshot) {
+                                    @NonNull UploadTask.TaskSnapshot taskSnapshot) {
                                 double progress
                                         = (100.0
                                         * taskSnapshot.getBytesTransferred()
