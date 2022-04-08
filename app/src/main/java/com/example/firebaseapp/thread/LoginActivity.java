@@ -97,6 +97,11 @@ public class LoginActivity extends AppCompatActivity {
                                 DatabaseReference pushRef = usersRef.child(Objects.requireNonNull(usersRef.push().getKey()));
                                 pushRef.child("userID").setValue(IDeditText.getText().toString());
                                 pushRef.child("userPwd").setValue(pwd.getText().toString());
+                                pushRef.child("eduLevel").setValue("NA");
+                                pushRef.child("gender").setValue("NA");
+                                pushRef.child("matched").setValue("NA");
+                                pushRef.child("studyTime").setValue("NA");
+                                pushRef.child("studyStyle").setValue("NA");
                                 MainActivity.loginStatus = "Y";
                                 MainActivity.USERID = IDeditText.getText().toString();
                                 Toast.makeText(LoginActivity.this, "Signup and login success", Toast.LENGTH_SHORT).show();

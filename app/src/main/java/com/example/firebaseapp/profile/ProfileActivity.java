@@ -22,6 +22,13 @@ import com.example.firebaseapp.match.MatchingActivity;
 import com.example.firebaseapp.thread.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -29,17 +36,69 @@ public class ProfileActivity extends AppCompatActivity {
     Toolbar profileToolbar;
     TextView usernameTextView;
     Button formButton;
+    Button matchMutton;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
+    DatabaseReference usersRef = database.getReference("UserGroups");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        formButton = findViewById(R.id.buttonProfile);
+        formButton = findViewById(R.id.updatePref);
         formButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ProfileActivity.this, MatchingActivity.class));
+            }
+        });
+
+        matchMutton = findViewById(R.id.matchMakeBtn);
+        matchMutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        DataSnapshot self_user = null;
+                        String self_eduLevel = "NA", self_gender = "NA", self_studyStyle = "NA", self_studyTime = "NA"; 
+                        for (DataSnapshot value : dataSnapshot.getChildren()) {
+                            if (Objects.equals(value.child("userID").getValue(), MainActivity.USERID)) {
+                                self_user = value;
+                                self_eduLevel = String.valueOf(value.child("eduLevel").getValue());
+                                self_gender = String.valueOf(value.child("gender").getValue());
+                                self_studyStyle = String.valueOf(value.child("studyStyle").getValue());
+                                self_studyTime = String.valueOf(value.child("studyTime").getValue());
+                                break;
+                            }
+                        }
+
+                        StringBuilder buddies = new StringBuilder("");
+                        for (DataSnapshot value : dataSnapshot.getChildren()) {
+                            if (Objects.equals(value.child("eduLevel").getValue(), self_eduLevel) 
+                                    && Objects.equals(value.child("gender").getValue(), self_gender) 
+                                    && Objects.equals(value.child("studyStyle").getValue(), self_studyStyle)
+                                    && Objects.equals(value.child("studyTime").getValue(), self_studyTime)
+                                    // CANNOT MATCH YOURSELF!!
+                                    && !Objects.equals(value.child("userID").getValue(), MainActivity.USERID)
+                            ) {
+                                buddies.append(value.child("userID").getValue());
+                                buddies.append(",");
+                            }
+                        }
+                        if (!String.valueOf(buddies).equals("")) {
+                            Objects.requireNonNull(self_user).getRef().child("matched").setValue(String.valueOf(buddies));
+                        } else {
+                            Objects.requireNonNull(self_user).getRef().child("matched").setValue("NA");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
@@ -141,8 +200,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void browser1(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com/calendar"));
-        startActivity(browserIntent);
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com/calendar")));
     }
 
     // shared pref edit. If you quit on this page, you still need to store login status!
