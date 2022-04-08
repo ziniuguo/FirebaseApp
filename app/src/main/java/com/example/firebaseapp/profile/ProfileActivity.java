@@ -3,6 +3,7 @@ package com.example.firebaseapp.profile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -137,6 +138,11 @@ public class ProfileActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void browser1(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com/calendar"));
+        startActivity(browserIntent);
     }
 
     // shared pref edit. If you quit on this page, you still need to store login status!
