@@ -25,36 +25,47 @@
         android:text="welcome XXXXXX"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:layout_centerInParent="true"/>
 
     <Button
         android:id="@+id/updatePref"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameTextView"
         android:text="Update Study Buddy Preferences"
         android:background="#aa6eae"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:paddingHorizontal="10dp"
+        android:layout_marginTop="55dp"
         />
 
     <Button
         android:id="@+id/googleCalendar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/updatePref"
         android:onClick="browser1"
         android:text="Update Calendar"
         android:background="#aa6eae"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
+        android:paddingHorizontal="65dp"
         />
 
     <Button
         android:id="@+id/matchMakeBtn"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/googleCalendar"
         android:text="Choose your study buddies"
         android:background="#aa6eae"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerInParent="true"
+        android:paddingHorizontal="30dp"
+
+
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -69,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/purple_500"
+        app:itemBackground="@color/colornavbar"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/navigation_menu" />
