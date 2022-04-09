@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="welcome XXXXXX"
-        android:textSize="50sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
 
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameTextView"
         android:text="Update Study Buddy Preferences"
+        android:background="#aa6eae"
         />
 
     <Button
@@ -42,6 +43,8 @@
         android:layout_below="@+id/updatePref"
         android:onClick="browser1"
         android:text="Update Calendar"
+        android:background="#aa6eae"
+        android:layout_marginTop="10dp"
         />
 
     <Button
@@ -49,7 +52,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/googleCalendar"
-        android:text="Find your study buddies..."
+        android:text="Choose your study buddies"
+        android:background="#aa6eae"
+        android:layout_marginTop="10dp"
         />
 
     <androidx.recyclerview.widget.RecyclerView
