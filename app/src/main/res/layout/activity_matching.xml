@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +12,7 @@
         android:id="@+id/matchToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorToolbar"
+        android:background="@color/colornavbar"
         android:theme="@style/ToolbarTheme">
     </androidx.appcompat.widget.Toolbar>
 
@@ -27,6 +28,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:paddingBottom="10dp"
         android:textColor="@color/black"
+        android:layout_marginTop="10dp"
         />
 
     <TextView
@@ -38,13 +40,17 @@
         app:layout_constraintRight_toRightOf="parent"
         android:paddingBottom="10dp"
         android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
         />
 
     <RadioGroup
         android:id="@+id/radio_edu"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp">
+
         <RadioButton android:id="@+id/radio_primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,14 +82,16 @@
         app:layout_constraintRight_toRightOf="parent"
         android:paddingBottom="10dp"
         android:textColor="@color/black"
+        android:layout_marginTop="10dp"
         />
 
 
     <RadioGroup
         android:id="@+id/radio_gender"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp">
         <RadioButton android:id="@+id/radio_female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nil"
+
             />
     </RadioGroup>
 
@@ -109,14 +118,16 @@
         app:layout_constraintRight_toRightOf="parent"
         android:paddingBottom="10dp"
         android:textColor="@color/black"
+        android:layout_marginTop="10dp"
         />
 
 
     <RadioGroup
         android:id="@+id/radio_time"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp">
         <RadioButton android:id="@+id/radio_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,14 +149,16 @@
         app:layout_constraintRight_toRightOf="parent"
         android:paddingBottom="10dp"
         android:textColor="@color/black"
+        android:layout_marginTop="10dp"
         />
 
 
     <RadioGroup
         android:id="@+id/radio_style"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp">
         <RadioButton android:id="@+id/radio_visual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -173,10 +186,13 @@
         android:id="@+id/btnMatch"
         android:text="Submit"
         android:textSize="20sp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:background="#aa6eae"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="100dp"
+
         />
 
 
