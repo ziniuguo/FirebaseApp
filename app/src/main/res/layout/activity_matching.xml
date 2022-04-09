@@ -19,9 +19,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/study_buddy_preferences"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp"
+        android:textColor="@color/black"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +35,10 @@
         android:text="@string/education_level"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp"
+        android:textColor="@color/black"
+        />
 
     <RadioGroup
         android:id="@+id/radio_edu"
@@ -64,7 +73,10 @@
         android:text="@string/gender_preference"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp"
+        android:textColor="@color/black"
+        />
 
 
     <RadioGroup
@@ -94,7 +106,10 @@
         android:text="@string/study_time_preference"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp"
+        android:textColor="@color/black"
+        />
 
 
     <RadioGroup
@@ -120,7 +135,10 @@
         android:text="@string/learning_style_preference"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp"
+        android:textColor="@color/black"
+        />
 
 
     <RadioGroup
@@ -154,9 +172,11 @@
     <Button
         android:id="@+id/btnMatch"
         android:text="Submit"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:background="#aa6eae"
+        android:layout_marginTop="10dp"
         />
 
 
