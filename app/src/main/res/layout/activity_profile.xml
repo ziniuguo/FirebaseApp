@@ -11,7 +11,7 @@
         android:id="@+id/profileToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorToolbar"
+        android:background="#743fb2"
         android:theme="@style/ToolbarTheme">
     </androidx.appcompat.widget.Toolbar>
 
@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/teal_700"
+        app:itemBackground="@color/purple_500"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/navigation_menu" />
