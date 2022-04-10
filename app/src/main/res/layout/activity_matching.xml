@@ -84,6 +84,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
         />
 
 
@@ -120,6 +121,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
         />
 
 
@@ -151,6 +153,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
         />
 
 
