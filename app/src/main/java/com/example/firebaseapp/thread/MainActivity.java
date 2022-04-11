@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.firebaseapp.R;
+import com.example.firebaseapp.match.MatchActivity;
 import com.example.firebaseapp.profile.ProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,7 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 switch(item.getItemId())
                 {
                     case R.id.dashboard:
-                        Toast.makeText(MainActivity.this,"Not implemented yet. You can go and do your part there!", Toast.LENGTH_SHORT).show();
+                        if (loginStatus.equals("N")) {
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        } else {
+                            startActivity(new Intent(MainActivity.this, MatchActivity.class));
+                            overridePendingTransition(0,0);
+                        }
                         return true;
                     case R.id.thread:
                         return true;

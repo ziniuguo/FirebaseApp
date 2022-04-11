@@ -18,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.firebaseapp.R;
+import com.example.firebaseapp.match.MatchActivity;
 import com.example.firebaseapp.match.MatchingActivity;
+import com.example.firebaseapp.thread.LoginActivity;
 import com.example.firebaseapp.thread.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -54,53 +56,53 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-//        matchMutton = findViewById(R.id.matchMakeBtn);
-//        matchMutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        DataSnapshot self_user = null;
-//                        String self_eduLevel = "NA", self_gender = "NA", self_studyStyle = "NA", self_studyTime = "NA";
-//                        for (DataSnapshot value : dataSnapshot.getChildren()) {
-//                            if (Objects.equals(value.child("userID").getValue(), MainActivity.USERID)) {
-//                                self_user = value;
-//                                self_eduLevel = String.valueOf(value.child("eduLevel").getValue());
-//                                self_gender = String.valueOf(value.child("gender").getValue());
-//                                self_studyStyle = String.valueOf(value.child("studyStyle").getValue());
-//                                self_studyTime = String.valueOf(value.child("studyTime").getValue());
-//                                break;
-//                            }
-//                        }
-//
-//                        StringBuilder buddies = new StringBuilder("");
-//                        for (DataSnapshot value : dataSnapshot.getChildren()) {
-//                            if (Objects.equals(value.child("eduLevel").getValue(), self_eduLevel)
-//                                    && Objects.equals(value.child("gender").getValue(), self_gender)
-//                                    && Objects.equals(value.child("studyStyle").getValue(), self_studyStyle)
-//                                    && Objects.equals(value.child("studyTime").getValue(), self_studyTime)
-//                                    // CANNOT MATCH YOURSELF!!
-//                                    && !Objects.equals(value.child("userID").getValue(), MainActivity.USERID)
-//                            ) {
-//                                buddies.append(value.child("userID").getValue());
-//                                buddies.append(",");
-//                            }
-//                        }
-//                        if (!String.valueOf(buddies).equals("")) {
-//                            Objects.requireNonNull(self_user).getRef().child("matched").setValue(String.valueOf(buddies));
-//                        } else {
-//                            Objects.requireNonNull(self_user).getRef().child("matched").setValue("NA");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//            }
-//        });
+        matchMutton = findViewById(R.id.matchMakeBtn);
+        matchMutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        DataSnapshot self_user = null;
+                        String self_eduLevel = "NA", self_gender = "NA", self_studyStyle = "NA", self_studyTime = "NA";
+                        for (DataSnapshot value : dataSnapshot.getChildren()) {
+                            if (Objects.equals(value.child("userID").getValue(), MainActivity.USERID)) {
+                                self_user = value;
+                                self_eduLevel = String.valueOf(value.child("eduLevel").getValue());
+                                self_gender = String.valueOf(value.child("gender").getValue());
+                                self_studyStyle = String.valueOf(value.child("studyStyle").getValue());
+                                self_studyTime = String.valueOf(value.child("studyTime").getValue());
+                                break;
+                            }
+                        }
+
+                        StringBuilder buddies = new StringBuilder("");
+                        for (DataSnapshot value : dataSnapshot.getChildren()) {
+                            if (Objects.equals(value.child("eduLevel").getValue(), self_eduLevel)
+                                    && Objects.equals(value.child("gender").getValue(), self_gender)
+                                    && Objects.equals(value.child("studyStyle").getValue(), self_studyStyle)
+                                    && Objects.equals(value.child("studyTime").getValue(), self_studyTime)
+                                    // CANNOT MATCH YOURSELF!!
+                                    && !Objects.equals(value.child("userID").getValue(), MainActivity.USERID)
+                            ) {
+                                buddies.append(value.child("userID").getValue());
+                                buddies.append(",");
+                            }
+                        }
+                        if (!String.valueOf(buddies).equals("")) {
+                            Objects.requireNonNull(self_user).getRef().child("matched").setValue(String.valueOf(buddies));
+                        } else {
+                            Objects.requireNonNull(self_user).getRef().child("matched").setValue("NA");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
 
         profileToolbar = findViewById(R.id.profileToolbar);
         setSupportActionBar(profileToolbar);
@@ -128,7 +130,10 @@ public class ProfileActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.dashboard:
-                        Toast.makeText(ProfileActivity.this, "Not implemented yet. You can go and do your part there!", Toast.LENGTH_SHORT).show();
+                        finish();
+                        startActivity(new Intent(ProfileActivity.this, MatchActivity.class));
+                        overridePendingTransition(0, 0);
+
                         return true;
                     case R.id.thread:
 //                        startActivity(new Intent(getApplicationContext(),MainActivity.class)
@@ -149,7 +154,6 @@ public class ProfileActivity extends AppCompatActivity {
         // super.onBackPressed();  // optional depending on your needs
         finish();
         overridePendingTransition(0, 0);
-
     }
 
     // don't forget to inflate!
@@ -174,7 +178,7 @@ public class ProfileActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 MainActivity.loginStatus = "N";
-                                MainActivity.USERID="refUserID";
+                                MainActivity.USERID = "refUserID";
                                 Toast.makeText(ProfileActivity.this, "You are logged out", Toast.LENGTH_SHORT).show();
 
                                 // logout以后别忘了finish，回Main
