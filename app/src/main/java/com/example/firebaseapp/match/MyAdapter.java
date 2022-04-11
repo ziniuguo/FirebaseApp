@@ -37,9 +37,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Users user = list.get(position);
-        holder.eduLevel.setText(user.getEDU());
-        holder.gender.setText(user.getGender());
         holder.studentid.setText(user.getUserID());
+        holder.gender.setText(user.getGender());
+        holder.eduLevel.setText(user.getEduLevel());
 
 
     }
