@@ -54,13 +54,13 @@
             android:name=".match.MatchingActivity"
             android:parentActivityName=".profile.ProfileActivity"
             android:screenOrientation="portrait"
-            android:label="@string/profile_activity_name"
+            android:label="@string/matching_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
             android:name=".match.MatchActivity"
             android:screenOrientation="portrait"
-            android:label="@string/profile_activity_name"
+            android:label="@string/match_activity_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 

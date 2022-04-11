@@ -23,6 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class MatchActivity extends AppCompatActivity {
 
@@ -55,6 +58,9 @@ public class MatchActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.dashboard);
 
+        matchToolbar = findViewById(R.id.matchToolbar);
+        setSupportActionBar(matchToolbar);
+
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
@@ -78,14 +84,25 @@ public class MatchActivity extends AppCompatActivity {
             }
         });
 
-        database.addValueEventListener(new ValueEventListener() {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if (Objects.equals(dataSnapshot.child("userID").getValue(), MainActivity.USERID)){
+                        String self_matched = (String) dataSnapshot.child("matched").getValue();
+                        String[] elements = self_matched.split(",");
+                        List<String> fixedLengthList = Arrays.asList(elements);
+                        ArrayList<String> matchedlist = new ArrayList<String>(fixedLengthList);
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                            if (matchedlist.contains((String) dataSnapshot1.child("userID").getValue())){
+                                Users user = dataSnapshot1.getValue(Users.class);
+                                list.add(user);
 
-                    Users user = dataSnapshot.getValue(Users.class);
-                    list.add(user);
+                            }
+                        }
+                        break;
+                    }
 
 
                 }

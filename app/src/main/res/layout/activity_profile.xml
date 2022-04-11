@@ -54,17 +54,17 @@
         android:paddingHorizontal="65dp"
         />
 
-    <Button
-        android:id="@+id/matchMakeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/googleCalendar"
-        android:text="Choose your study buddies"
-        android:background="#aa6eae"
-        android:layout_marginTop="20dp"
-        android:layout_centerInParent="true"
-        android:paddingHorizontal="30dp"
-        />
+<!--    <Button-->
+<!--        android:id="@+id/matchMakeBtn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/googleCalendar"-->
+<!--        android:text="Choose your study buddies"-->
+<!--        android:background="#aa6eae"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:paddingHorizontal="30dp"-->
+<!--        />-->
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/matched_users"-->

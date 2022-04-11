@@ -22,13 +22,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Education level :"
+                android:text="Student ID :"
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/eduLevel"
+                android:id="@+id/StudentID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -72,13 +72,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="STUDENT ID :"
+                android:text="Education :"
                 android:textColor="@color/black"
                 android:textSize="26sp"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/StudentID"
+                android:id="@+id/eduLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -91,4 +91,14 @@
 
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colornavbar"/>
+
 </androidx.cardview.widget.CardView>
