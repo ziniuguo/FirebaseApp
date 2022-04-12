@@ -13,28 +13,43 @@
         android:theme="@style/ToolbarTheme">
     </androidx.appcompat.widget.Toolbar>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_gravity="center"></ImageView>
+
     <EditText
         android:id="@+id/IDInput"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_username"
         android:minHeight="48dp"
         android:singleLine="true"
+        android:textAlignment="center"
+
         android:inputType="number"/>
+
 
     <EditText
         android:id="@+id/pwdInput"
+        android:layout_marginHorizontal="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_password"
+        android:textAlignment="center"
         android:minHeight="48dp"
         android:singleLine="true"
         android:inputType="textPassword"/>
 
     <TextView
         android:padding="10dp"
+        android:layout_marginHorizontal="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:text="@string/login_notice"/>
 
 </LinearLayout>
