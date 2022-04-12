@@ -13,7 +13,7 @@
     <string name="login_password">Password</string>
     <string name="login_activity_name">Login</string>
     <string name="login">login</string>
-    <string name="login_notice">Please use your studentID as username. \nIf you don\'t have an account, you will be signed up automatically.</string>
+    <string name="login_notice">If you don\'t have an account, you will be signed up automatically!</string>
     <string name="profile_activity_name">Me</string>
     <string name="logout">logout</string>
     <string name="do_your_profile_page_here">DO YOUR PROFILE PAGE HERE</string>
