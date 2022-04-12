@@ -11,7 +11,7 @@
         android:id="@+id/profileToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#743fb2"
+        android:background="@color/colornavbar"
         android:theme="@style/ToolbarTheme">
     </androidx.appcompat.widget.Toolbar>
 
