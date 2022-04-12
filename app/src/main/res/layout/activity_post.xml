@@ -12,7 +12,7 @@
         android:id="@+id/postToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorToolbar"
+        android:background="@color/colornavbar"
         android:theme="@style/ToolbarTheme">
     </androidx.appcompat.widget.Toolbar>
 
