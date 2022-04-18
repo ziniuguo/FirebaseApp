@@ -42,4 +42,6 @@
     <string name="comment_placeholder">Nothing is here…</string>
     <string name="matching_activity_name">Preferences</string>
     <string name="match_activity_name">Matches</string>
+    <string name="telegram">What is your Telegram username?</string>
+    <string name="hint_telegram">telegram username</string>
 </resources>
