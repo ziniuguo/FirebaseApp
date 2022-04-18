@@ -40,7 +40,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.studentid.setText(user.getUserID());
         holder.gender.setText(user.getGender());
         holder.eduLevel.setText(user.getEduLevel());
-
+        holder.tg.setText(user.getTg());
 
     }
 
@@ -51,7 +51,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView eduLevel, gender, studentid;
+        TextView eduLevel, gender, studentid, tg;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,7 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             eduLevel = itemView.findViewById(R.id.eduLevel);
             gender = itemView.findViewById(R.id.Gender);
             studentid = itemView.findViewById(R.id.StudentID);
-
+            tg = itemView.findViewById(R.id.telegram);
         }
     }
 

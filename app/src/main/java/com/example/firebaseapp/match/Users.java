@@ -1,9 +1,9 @@
 package com.example.firebaseapp.match;
 
 public class Users {
-    String eduLevel, gender, userID;
+    String eduLevel, gender, userID, tg;
 
-
+    public String getTg(){return tg; }
 
     public String getGender() {
         return gender;
