@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class MatchingActivity extends AppCompatActivity {
     Button submitBtn;
     RadioGroup rG1, rG2, rG3, rG4;
     String rT1, rT2, rT3, rT4;
+    EditText tgHandle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class MatchingActivity extends AppCompatActivity {
         rG2 = findViewById(R.id.radio_gender);
         rG3 = findViewById(R.id.radio_time);
         rG4 = findViewById(R.id.radio_style);
+        tgHandle = findViewById(R.id.tgHandle);
 
         matchingToolbar = findViewById(R.id.matchToolbar);
         submitBtn = findViewById(R.id.btnMatch);
@@ -63,8 +66,9 @@ public class MatchingActivity extends AppCompatActivity {
                 int rG2Option = rG2.getCheckedRadioButtonId();
                 int rG3Option = rG3.getCheckedRadioButtonId();
                 int rG4Option = rG4.getCheckedRadioButtonId();
+                String tgUsername = tgHandle.getText().toString();
                 if (rG1Option == -1 ||rG2Option == -1 ||
-                        rG3Option == -1 || rG4Option == -1){
+                        rG3Option == -1 || rG4Option == -1 || tgUsername.equals("")){
                     Toast.makeText(MatchingActivity.this, "Please select all the options!", Toast.LENGTH_SHORT).show();
                 } else {
                     RadioButton rB1 = findViewById(rG1Option);
@@ -85,6 +89,7 @@ public class MatchingActivity extends AppCompatActivity {
                                     value.getRef().child("gender").setValue(rT2);
                                     value.getRef().child("studyTime").setValue(rT3);
                                     value.getRef().child("studyStyle").setValue(rT4);
+                                    value.getRef().child("tg").setValue(tgUsername);
                                     // An alternative
 //                                    String currentKey = value.getKey();
 //                                    usersRef.child(Objects.requireNonNull(currentKey))
