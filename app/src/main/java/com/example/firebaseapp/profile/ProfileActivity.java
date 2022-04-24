@@ -17,17 +17,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.firebaseapp.Firebase;
 import com.example.firebaseapp.R;
 import com.example.firebaseapp.match.MatchActivity;
 import com.example.firebaseapp.match.MatchingActivity;
-import com.example.firebaseapp.thread.LoginActivity;
 import com.example.firebaseapp.thread.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
@@ -40,8 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
     Button formButton;
 //    Button matchMutton;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
-    DatabaseReference usersRef = database.getReference("UserGroups");
+    Firebase firebase = Firebase.getInstance();
+    DatabaseReference usersRef = firebase.getRef("UserGroups");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,61 +55,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-//        matchMutton = findViewById(R.id.matchMakeBtn);
-//        matchMutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        DataSnapshot self_user = null;
-//                        String self_eduLevel = "NA", self_gender = "NA", self_studyStyle = "NA", self_studyTime = "NA";
-//                        for (DataSnapshot value : dataSnapshot.getChildren()) {
-//                            if (Objects.equals(value.child("userID").getValue(), MainActivity.USERID)) {
-//                                self_user = value;
-//                                self_eduLevel = String.valueOf(value.child("eduLevel").getValue());
-//                                self_gender = String.valueOf(value.child("gender").getValue());
-//                                self_studyStyle = String.valueOf(value.child("studyStyle").getValue());
-//                                self_studyTime = String.valueOf(value.child("studyTime").getValue());
-//                                break;
-//                            }
-//                        }
-//
-//                        StringBuilder buddies = new StringBuilder("");
-//                        for (DataSnapshot value : dataSnapshot.getChildren()) {
-//                            if (Objects.equals(value.child("eduLevel").getValue(), self_eduLevel)
-//                                    && Objects.equals(value.child("gender").getValue(), self_gender)
-//                                    && Objects.equals(value.child("studyStyle").getValue(), self_studyStyle)
-//                                    && Objects.equals(value.child("studyTime").getValue(), self_studyTime)
-//                                    // CANNOT MATCH YOURSELF!!
-//                                    && !Objects.equals(value.child("userID").getValue(), MainActivity.USERID)
-//                            ) {
-//                                buddies.append(value.child("userID").getValue());
-//                                buddies.append(",");
-//                            }
-//                        }
-//                        if (!String.valueOf(buddies).equals("")) {
-//                            Objects.requireNonNull(self_user).getRef().child("matched").setValue(String.valueOf(buddies));
-//                        } else {
-//                            Objects.requireNonNull(self_user).getRef().child("matched").setValue("NA");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//            }
-//        });
-
         profileToolbar = findViewById(R.id.profileToolbar);
         setSupportActionBar(profileToolbar);
         // We don't need the up button anymore!
-//        if (getSupportActionBar() != null){
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        }
 
         usernameTextView = findViewById(R.id.usernameTextView);
         String welcomeText = "Welcome " + MainActivity.USERID + "!";
@@ -146,7 +93,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                StringBuilder buddies = new StringBuilder("");
+                                StringBuilder buddies = new StringBuilder();
                                 for (DataSnapshot value : dataSnapshot.getChildren()) {
                                     if (Objects.equals(value.child("eduLevel").getValue(), self_eduLevel)
                                             && Objects.equals(value.child("gender").getValue(), self_gender)
@@ -177,8 +124,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.thread:
-//                        startActivity(new Intent(getApplicationContext(),MainActivity.class)
-//                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         finish();
                         overridePendingTransition(0, 0);
                         return true;
@@ -234,11 +179,6 @@ public class ProfileActivity extends AppCompatActivity {
                         .show();
                 return true;
 //                we don't need up button anymore!
-//            case android.R.id.home:
-//                // onBackPressed();
-//                // i think onBackPressed also can lah
-//                finish();
-//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -19,12 +19,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.firebaseapp.Firebase;
 import com.example.firebaseapp.R;
 import com.example.firebaseapp.thread.models.ThreadClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,8 +38,9 @@ import java.util.Objects;
 public class PostActivity extends AppCompatActivity {
     EditText contentText;
     EditText titleText;
-    FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
-    DatabaseReference myRef = database.getReference("Threads");
+
+    Firebase firebase = Firebase.getInstance();
+    DatabaseReference myRef = firebase.getRef("Threads");
 
     // set toolbar
     Toolbar postToolbar;

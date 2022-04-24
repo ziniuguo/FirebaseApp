@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Topic implements Subject {
     private final int threadId;
-    private ArrayList<Observer> observers;
+    private final ArrayList<Observer> observers;
 
     //Update msg, i.e. what user sees when something happens
     private String msg;

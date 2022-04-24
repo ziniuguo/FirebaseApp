@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.firebaseapp.Firebase;
 import com.example.firebaseapp.R;
 import com.example.firebaseapp.thread.models.Comment;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,7 +30,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,9 +56,10 @@ public class ThreadActivity extends AppCompatActivity {
 
     LinearLayout dynamicLayout;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
-    DatabaseReference threadsRef = database.getReference("Threads");
-    DatabaseReference commentsRef = database.getReference("Comments");
+    Firebase firebase = Firebase.getInstance();
+    DatabaseReference threadsRef = firebase.getRef("Threads");
+    DatabaseReference commentsRef = firebase.getRef("Comments");
+
     // Storage database
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();

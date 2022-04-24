@@ -1,9 +1,7 @@
 package com.example.firebaseapp.match;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,21 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.firebaseapp.Firebase;
 import com.example.firebaseapp.R;
-import com.example.firebaseapp.profile.ProfileActivity;
-import com.example.firebaseapp.thread.LoginActivity;
 import com.example.firebaseapp.thread.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
 public class MatchingActivity extends AppCompatActivity {
-    FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
-    DatabaseReference usersRef = database.getReference("UserGroups");
+
+    Firebase firebase = Firebase.getInstance();
+    DatabaseReference usersRef = firebase.getRef("UserGroups");
 
     Toolbar matchingToolbar;
     Button submitBtn;
@@ -91,15 +88,6 @@ public class MatchingActivity extends AppCompatActivity {
                                     value.getRef().child("studyStyle").setValue(rT4);
                                     value.getRef().child("tg").setValue(tgUsername);
                                     // An alternative
-//                                    String currentKey = value.getKey();
-//                                    usersRef.child(Objects.requireNonNull(currentKey))
-//                                            .child("eduLevel").setValue(rT1);
-//                                    usersRef.child(Objects.requireNonNull(currentKey))
-//                                            .child("gender").setValue(rT2);
-//                                    usersRef.child(Objects.requireNonNull(currentKey))
-//                                            .child("studyTime").setValue(rT3);
-//                                    usersRef.child(Objects.requireNonNull(currentKey))
-//                                            .child("studyStyle").setValue(rT4);
                                     break;
                                 }
                             }

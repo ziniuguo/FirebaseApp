@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Subscriber implements Observer {
     //Unique userId generated from singleton User class
-    private String userId;
+    private final String userId;
 
     //List of all subjects subscribed to
-    private ArrayList<Subject> subject;
+    private final ArrayList<Subject> subject;
 
     //Initial topics to follow
     //e.g. English, Math etc

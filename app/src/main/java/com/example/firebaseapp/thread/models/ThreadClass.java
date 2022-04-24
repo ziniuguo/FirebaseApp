@@ -6,7 +6,7 @@ public class ThreadClass implements Rating {
     private int rating;
     private String title;
     private String thread;
-    private String time;
+    private final String time;
 
     public ThreadClass(String userId, String title, String thread, String time) {
         this.userId = userId;

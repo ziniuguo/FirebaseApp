@@ -10,18 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firebaseapp.R;
-import com.example.firebaseapp.thread.models.User;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder> {
 
     Context context;
 
     ArrayList<Users> list;
 
 
-    public MyAdapter(Context context, ArrayList<Users> list) {
+    public MatchAdapter(Context context, ArrayList<Users> list) {
         this.context = context;
         this.list = list;
     }

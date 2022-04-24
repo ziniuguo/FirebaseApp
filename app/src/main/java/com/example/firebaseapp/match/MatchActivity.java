@@ -11,15 +11,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.firebaseapp.Firebase;
 import com.example.firebaseapp.R;
 import com.example.firebaseapp.profile.ProfileActivity;
-import com.example.firebaseapp.thread.LoginActivity;
 import com.example.firebaseapp.thread.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -36,8 +35,11 @@ public class MatchActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     RecyclerView recyclerView;
-    DatabaseReference database;
-    MyAdapter myAdapter;
+
+    Firebase firebase = Firebase.getInstance();
+    DatabaseReference database = firebase.getRef("UserGroups");
+
+    MatchAdapter myAdapter;
     ArrayList<Users> list;
 
     @Override
@@ -46,12 +48,11 @@ public class MatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_match);
 
         recyclerView = findViewById(R.id.matches);
-        database = FirebaseDatabase.getInstance().getReference("UserGroups");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        list = new ArrayList<Users>();
-        myAdapter = new MyAdapter(this,list);
+        list = new ArrayList<>();
+        myAdapter = new MatchAdapter(this,list);
         recyclerView.setAdapter(myAdapter);
 
         // bottom bar
@@ -93,7 +94,7 @@ public class MatchActivity extends AppCompatActivity {
                         String self_matched = (String) dataSnapshot.child("matched").getValue();
                         String[] elements = self_matched.split(",");
                         List<String> fixedLengthList = Arrays.asList(elements);
-                        ArrayList<String> matchedlist = new ArrayList<String>(fixedLengthList);
+                        ArrayList<String> matchedlist = new ArrayList<>(fixedLengthList);
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){
                             if (matchedlist.contains((String) dataSnapshot1.child("userID").getValue())){
                                 Users user = dataSnapshot1.getValue(Users.class);

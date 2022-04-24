@@ -17,13 +17,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.firebaseapp.Firebase;
 import com.example.firebaseapp.R;
 import com.example.firebaseapp.match.MatchActivity;
 import com.example.firebaseapp.profile.ProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -56,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> contentList = new ArrayList<>();
     ArrayList<String> indexList = new ArrayList<>();
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
-    DatabaseReference threadsRef = database.getReference("Threads");
-    DatabaseReference adminRef = database.getReference("Admins");
-    DatabaseReference usersRef = database.getReference("UserGroups");
+    Firebase firebase = Firebase.getInstance();
+    DatabaseReference threadsRef = firebase.getRef("Threads");
+    DatabaseReference usersRef = firebase.getRef("UserGroups");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
 
-                                    StringBuilder buddies = new StringBuilder("");
+                                    StringBuilder buddies = new StringBuilder();
                                     for (DataSnapshot value : dataSnapshot.getChildren()) {
                                         if (Objects.equals(value.child("eduLevel").getValue(), self_eduLevel)
                                                 && Objects.equals(value.child("gender").getValue(), self_gender)
@@ -150,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
         postList = findViewById(R.id.simpleListView);
         adminNotice = findViewById(R.id.adminNotice);
-//        buttonPost = findViewById(R.id.postData);
 
         // set mainToolbar so that the app name is shown
         mainToolbar = findViewById(R.id.mainToolbar);
@@ -166,28 +164,15 @@ public class MainActivity extends AppCompatActivity {
                 indexList.clear();
                 for (DataSnapshot value : dataSnapshot.getChildren()) {
                     if (Objects.equals(value.child("status").getValue(), "Active")) {
-
-                        // this is stupid, it eats up time complexity O(n)
-                        // and space complexity O(1).
-                        // I should use a different structure like queue.
-                        // But nvm, probably we can solve this problem
-                        // if we want to implement sorting function later.
-
-                        Collections.reverse(titleList);
                         titleList.add((String) value.child("title").getValue());
-                        Collections.reverse(titleList);
-
-                        Collections.reverse(contentList);
                         contentList.add((String) value.child("thread").getValue());
-                        Collections.reverse(contentList);
-
-                        Collections.reverse(indexList);
                         indexList.add(value.getKey());
-                        Collections.reverse(indexList);
                     }
                 }
-//                ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this,
-//                        R.layout.activity_listview, R.id.listText, titleList);
+                Collections.reverse(titleList);
+                Collections.reverse(contentList);
+                Collections.reverse(indexList);
+
 
                 MyAdapter myAdapter = new MyAdapter(MainActivity.this, R.layout.activity_listview,
                         R.id.listText, titleList, contentList);
@@ -203,34 +188,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        adminRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String change = snapshot.getValue(String.class);
-                adminNotice.setText(change);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        firebase.setTextView(adminNotice, "Admin");
 
-            }
-        });
 
-//        Intent navigate = new Intent(MainActivity.this, PostActivity.class);
-//        buttonPost.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                //Eventually query for userId from firebase as well
-//                navigate.putExtra(USERID, "TestUserHardCoded");
-//
-//                startActivity(navigate);
-//            }
-//        });
 
 
         // tap on the post
-        Intent postDetail = new Intent(MainActivity.this, ThreadActivity.class);
         postList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -242,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Eventually query for userId from firebase as well
 //                    postDetail.putExtra("USERID", USERID);
-
+                    Intent postDetail = new Intent(MainActivity.this, ThreadActivity.class);
                     startActivity(postDetail);
                 }
             }

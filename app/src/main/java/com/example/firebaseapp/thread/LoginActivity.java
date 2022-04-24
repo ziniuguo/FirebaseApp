@@ -12,12 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.firebaseapp.Firebase;
 import com.example.firebaseapp.R;
 import com.example.firebaseapp.profile.ProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
@@ -29,8 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     // set text input
     EditText IDeditText;
     EditText pwd;
-    FirebaseDatabase database = FirebaseDatabase.getInstance("https://android-firebase-9538d-default-rtdb.asia-southeast1.firebasedatabase.app");
-    DatabaseReference usersRef = database.getReference("UserGroups");
+
+    Firebase firebase = Firebase.getInstance();
+    DatabaseReference usersRef = firebase.getRef("UserGroups");
 
 
     protected void onCreate(Bundle savedInstanceState) {
